@@ -1,4 +1,4 @@
-var camera, scene, renderer, controls, mouse, raycaster;
+var camera, scene, renderer, controls, mouse, raycaster, gui;
 var rollOverMesh;
 var cubeList = mineList = [];
 var cubeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
@@ -11,6 +11,7 @@ var tipGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5);
 var tipMaterial = new THREE.MeshBasicMaterial({color: 0x46eb34, opacity: 1, transparent: true});
 
 init();
+addGui();
 
 function init() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100);
@@ -55,6 +56,16 @@ function addCubes(cubeCountPerEdge=3) {
         }
     render();
     return cubeList;
+}
+
+function addGui() {
+    var api = {
+        'Reset': function() {
+            location.reload();
+        }
+    };
+    gui = new dat.GUI();
+    gui.add(api, 'Reset');
 }
 
 function addMines(cubeList, mineCount=10) {
