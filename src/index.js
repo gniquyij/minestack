@@ -79,13 +79,13 @@ function addMines(cubeList, minesTotal=10) {
     }
 }
 
-function addTip(minesAround) {
+function addTip(mineAroundCount) {
     var canvas = document.createElement('canvas')
     canvas.width = 25
     canvas.height = 25
     var context = canvas.getContext('2d')
     context.fillStyle = 'white'
-    context.fillText(minesAround, canvas.width/4, canvas.height/2)
+    context.fillText(mineAroundCount, canvas.width/4, canvas.height/2)
     var texture = new THREE.CanvasTexture(canvas)
     texture.needsUpdate = true
     return new THREE.MeshBasicMaterial({map: texture})
@@ -93,30 +93,30 @@ function addTip(minesAround) {
 
 function addTips(cubeList) {
     for (var i in cubeList) {
-        var minesAround = countMinesAround(cubeList[i], cubeList)
-        cubeList[i].tip = addTip(minesAround)
+        var mineAroundCount = countMineAround(cubeList[i], cubeList)
+        cubeList[i].tip = addTip(mineAroundCount)
     }
 }
 
-function countMinesAround(cube, cubeList) {
-    var cubesAroundList = []
+function countMineAround(cube, cubeList) {
+    var cubeAroundList = []
     var aList = range(parseInt(cube.position.x) - 1, parseInt(cube.position.x) + 1)
     var bList = range(parseInt(cube.position.y) - 1, parseInt(cube.position.y) + 1)
     var cList = range(parseInt(cube.position.z) - 1, parseInt(cube.position.z) + 1)
     for (var a in aList)
         for (var b in bList)
             for (var c in cList) {
-                var cubeAround = new THREE.Vector3(a, b, c)
-                cubesAroundList.push(cubeAround)
+                var cubeAround = new THREE.Vector3(aList[a], bList[b], cList[c])
+                cubeAroundList.push(cubeAround)
             }
-    var minesAround = 0
+    var mineAroundCount = 0
     for (var i in cubeList)
-        for (var v in cubesAroundList) {
-            if (cubeList[i].position.equals(cubesAroundList[v]) && cubeList[i].isMine) {
-                minesAround ++
+        for (var v in cubeAroundList) {
+            if (cubeList[i].position.equals(cubeAroundList[v]) && cubeList[i].isMine) {
+                mineAroundCount ++
             }
         }
-    return minesAround
+    return mineAroundCount
 }
 
 function onDocumentMouseDown(event) {
@@ -130,8 +130,8 @@ function onDocumentMouseDown(event) {
         m.position.x = '' + Math.round(m.position.x)
         m.position.y = '' + Math.round(m.position.y)
         m.position.z = '' + Math.round(m.position.z)
-        var minesAround = countMinesAround(m, cubeList)
-        m.material = addTip(minesAround)
+        var mineAroundCount = countMineAround(m, cubeList)
+        m.material = addTip(mineAroundCount)
         for (var i in cubeList) {
             if (cubeList[i].position.equals(m.position) && cubeList[i].isMine) {
                 for (c in cubeList) {
@@ -170,7 +170,7 @@ function onWindowResize() {
 function range(start, stop) {
     var rangeList = []
     for (var i=start; i<=stop; i++) {
-        rangeList.push(i)
+        rangeList.push(i.toString())
     }
     return rangeList
 }
