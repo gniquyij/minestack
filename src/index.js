@@ -135,7 +135,7 @@ function onDocumentMouseDown(event) {
         for (var i in cubeList) {
             if (cubeList[i].position.equals(m.position) && cubeList[i].isMine) {
                 for (c in cubeList) {
-                    cubeList[c].material = m.material
+                    cubeList[c].material = cubeList[c].tip
                     if (cubeList[c].isMine) {
                         cubeList[c].material = mineMaterial
                         gameOver = true
