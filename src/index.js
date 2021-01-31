@@ -72,11 +72,11 @@ function addMines(cubeList, minesTotal=10) {
     if (minesTotal >= cubeList.length) {
         return
     }
+    cubeList.sort(() => Math.random() - 0.5);
     mineList = cubeList.slice(0, minesTotal);
     for (var i in mineList) {
         mineList[i].isMine = true
     }
-    cubeList.sort(() => Math.random() - 0.5);
 }
 
 function addTip(minesAround) {
