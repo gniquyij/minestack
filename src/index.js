@@ -93,12 +93,13 @@ function addTip(mineAroundCount) {
 
 function addTips(cubeList) {
     for (var i in cubeList) {
-        var mineAroundCount = countMineAround(cubeList[i], cubeList)
-        cubeList[i].tip = addTip(mineAroundCount)
+        var mineAround = getMineAround(cubeList[i], cubeList)
+        cubeList[i].tip = addTip(mineAround.count)
     }
 }
 
-function countMineAround(cube, cubeList) {
+function getMineAround(cube, cubeList) {
+    var abcList = []
     var cubeAroundList = []
     var aList = range(parseInt(cube.position.x) - 1, parseInt(cube.position.x) + 1)
     var bList = range(parseInt(cube.position.y) - 1, parseInt(cube.position.y) + 1)
@@ -107,18 +108,22 @@ function countMineAround(cube, cubeList) {
         for (var b in bList)
             for (var c in cList) {
                 var cubeAround = new THREE.Vector3(aList[a], bList[b], cList[c])
-                cubeAroundList.push(cubeAround)
+                abcList.push(cubeAround)
             }
     var mineAroundCount = 0
     for (var i in cubeList)
-        for (var v in cubeAroundList) {
-            if (cubeList[i].position.equals(cubeAroundList[v])) {
+        for (var v in abcList) {
+            if (cubeList[i].position.equals(abcList[v])) {
+                cubeAroundList.push(cubeList[i])
                 if (cubeList[i].isMine) {
                     mineAroundCount ++
                 }
             }
         }
-    return mineAroundCount
+    return {
+        list: cubeAroundList,
+        count: mineAroundCount
+    }
 }
 
 function onDocumentMouseDown(event) {
@@ -132,8 +137,8 @@ function onDocumentMouseDown(event) {
         m.position.x = '' + Math.round(m.position.x)
         m.position.y = '' + Math.round(m.position.y)
         m.position.z = '' + Math.round(m.position.z)
-        var mineAroundCount = countMineAround(m, cubeList)
-        m.material = addTip(mineAroundCount)
+        var mineAround = getMineAround(m, cubeList)
+        m.material = addTip(mineAround.count)
         for (var i in cubeList) {
             if (cubeList[i].position.equals(m.position)) {
                 if (cubeList[i].isMine) {
