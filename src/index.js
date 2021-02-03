@@ -112,8 +112,10 @@ function countMineAround(cube, cubeList) {
     var mineAroundCount = 0
     for (var i in cubeList)
         for (var v in cubeAroundList) {
-            if (cubeList[i].position.equals(cubeAroundList[v]) && cubeList[i].isMine) {
-                mineAroundCount ++
+            if (cubeList[i].position.equals(cubeAroundList[v])) {
+                if (cubeList[i].isMine) {
+                    mineAroundCount ++
+                }
             }
         }
     return mineAroundCount
@@ -133,12 +135,14 @@ function onDocumentMouseDown(event) {
         var mineAroundCount = countMineAround(m, cubeList)
         m.material = addTip(mineAroundCount)
         for (var i in cubeList) {
-            if (cubeList[i].position.equals(m.position) && cubeList[i].isMine) {
-                for (c in cubeList) {
-                    cubeList[c].material = cubeList[c].tip
-                    if (cubeList[c].isMine) {
-                        cubeList[c].material = mineMaterial
-                        gameOver = true
+            if (cubeList[i].position.equals(m.position)) {
+                if (cubeList[i].isMine) {
+                    for (c in cubeList) {
+                        cubeList[c].material = cubeList[c].tip
+                        if (cubeList[c].isMine) {
+                            cubeList[c].material = mineMaterial
+                            gameOver = true
+                        }
                     }
                 }
             }
