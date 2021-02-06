@@ -22,9 +22,8 @@ function init() {
     raycaster = new THREE.Raycaster()
     mouse = new THREE.Vector2()
     gameOver = false
+    gameStarted = false
     cubeList = addCubes()
-    addMines(cubeList)
-    addTips(cubeList)
     rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial)
     scene.add(rollOverMesh)
     document.body.appendChild(renderer.domElement)
@@ -93,12 +92,16 @@ function addTip(mineAroundCount) {
 
 function addTips(cubeList) {
     for (var i in cubeList) {
-        var mineAround = getMineAround(cubeList[i], cubeList)
-        cubeList[i].tip = addTip(mineAround.count)
+        var cubeAround = getCubeAround(cubeList[i], cubeList)
+        cubeList[i].tip = addTip(cubeAround.countMineAround)
     }
 }
 
-function getMineAround(cube, cubeList) {
+function createRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+function getCubeAround(cube, cubeList) {
     var abcList = []
     var cubeAroundList = []
     var aList = range(parseInt(cube.position.x) - 1, parseInt(cube.position.x) + 1)
@@ -121,8 +124,8 @@ function getMineAround(cube, cubeList) {
             }
         }
     return {
-        list: cubeAroundList,
-        count: mineAroundCount
+        listCubeAround: cubeAroundList,
+        countMineAround: mineAroundCount
     }
 }
 
@@ -137,10 +140,24 @@ function onDocumentMouseDown(event) {
         m.position.x = '' + Math.round(m.position.x)
         m.position.y = '' + Math.round(m.position.y)
         m.position.z = '' + Math.round(m.position.z)
-        var mineAround = getMineAround(m, cubeList)
-        m.material = addTip(mineAround.count)
         for (var i in cubeList) {
             if (cubeList[i].position.equals(m.position)) {
+                if (!gameStarted) {
+                    mineAroundTheFirstCount = createRandomInt(0, 7)
+                    var cubeAroundTheFirst = getCubeAround(cubeList[i], cubeList)
+                    var cubeAroundTheFirstList = cubeAroundTheFirst.listCubeAround
+                    addMines(cubeAroundTheFirstList, mineAroundTheFirstCount)
+                    var cubeAroundWithoutTheFirstList = cubeList.filter(x => !cubeAroundTheFirstList.includes(x))
+                    addMines(cubeAroundWithoutTheFirstList, 10 - mineAroundTheFirstCount)
+                    addTips(cubeList)
+                    m.material = cubeList[i].tip
+                    m.position.divideScalar(2).floor().multiplyScalar(1).addScalar(1)
+                    scene.add(m)
+                    render()
+                    gameStarted = true
+                    return
+                }
+                m.material = cubeList[i].tip
                 if (cubeList[i].isMine) {
                     for (c in cubeList) {
                         cubeList[c].material = cubeList[c].tip
