@@ -165,6 +165,7 @@ function onDocumentMouseDown(event) {
                             gameOver = true
                         }
                     }
+                    scene.remove(rollOverMesh)
                 }
                 m.material = cubeList[i].tip
                 var cubeAroundM = getCubeAround(cubeList[i], cubeList)
