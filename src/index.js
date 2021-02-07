@@ -157,7 +157,6 @@ function onDocumentMouseDown(event) {
                     gameStarted = true
                     return
                 }
-                m.material = cubeList[i].tip
                 if (cubeList[i].isMine) {
                     for (c in cubeList) {
                         cubeList[c].material = cubeList[c].tip
@@ -166,6 +165,13 @@ function onDocumentMouseDown(event) {
                             gameOver = true
                         }
                     }
+                }
+                m.material = cubeList[i].tip
+                var cubeAroundM = getCubeAround(cubeList[i], cubeList)
+                var cubeAroundMList = cubeAroundM.listCubeAround
+                var cubeAroundMListIndex = range(0, Math.round(cubeAroundMList.length / 2))
+                for (var i in cubeAroundMListIndex) {
+                    cubeAroundMList[cubeAroundMListIndex[i]].material = cubeAroundMList[cubeAroundMListIndex[i]].tip
                 }
             }
         }
