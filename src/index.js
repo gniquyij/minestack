@@ -78,6 +78,10 @@ function addMines(cubeList, minesTotal=10) {
     }
 }
 
+function addRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
 function addTip(mineAroundCount) {
     var canvas = document.createElement('canvas')
     canvas.width = 25
@@ -95,10 +99,6 @@ function addTips(cubeList) {
         var cubeAround = getCubeAround(cubeList[i], cubeList)
         cubeList[i].tip = addTip(cubeAround.countMineAround)
     }
-}
-
-function createRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 function getCubeAround(cube, cubeList) {
@@ -143,7 +143,7 @@ function onDocumentMouseDown(event) {
         for (var i in cubeList) {
             if (cubeList[i].position.equals(m.position)) {
                 if (!gameStarted) {
-                    mineAroundTheFirstCount = createRandomInt(0, 7)
+                    mineAroundTheFirstCount = addRandomInt(0, 7)
                     var cubeAroundTheFirst = getCubeAround(cubeList[i], cubeList)
                     var cubeAroundTheFirstList = cubeAroundTheFirst.listCubeAround
                     addMines(cubeAroundTheFirstList, mineAroundTheFirstCount)
