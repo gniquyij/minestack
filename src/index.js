@@ -55,8 +55,7 @@ function addCubes(cubeCountPerEdge=3) {
         for (var y in yList)
             for (var z in zList) {
                     var cubeMesh = new THREE.Mesh(cubeGeo, cubeMaterial)
-//                    cubeMesh.position.set(Math.round(xList[x]), Math.round(yList[y]), Math.round(zList[z]))
-                    cubeMesh.position.set(x, y, z)
+                    cubeMesh.position.set(Math.round(xList[x]), Math.round(yList[y]), Math.round(zList[z]))
                     cubeMesh.isMine = false
                     cubeGroupObj.add(cubeMesh)
                 }
@@ -116,7 +115,7 @@ function getCubeAround(cube, cubeList) {
     for (var a in aList)
         for (var b in bList)
             for (var c in cList) {
-                var cubeAround = new THREE.Vector3(aList[a], bList[b], cList[c])
+                var cubeAround = new THREE.Vector3(parseInt(aList[a]), parseInt(bList[b]), parseInt(cList[c]))
                 abcList.push(cubeAround)
             }
     var mineAroundCount = 0
@@ -143,9 +142,9 @@ function onDocumentMouseDown(event) {
         var intersect = intersects[0]
         var m = new THREE.Mesh(tipGeo, cubeMaterial)
         m.position.copy(intersect.point)
-        m.position.x = '' + Math.round(m.position.x)
-        m.position.y = '' + Math.round(m.position.y)
-        m.position.z = '' + Math.round(m.position.z)
+        m.position.x = Math.round(m.position.x)
+        m.position.y = Math.round(m.position.y)
+        m.position.z = Math.round(m.position.z)
         for (var i in cubeList) {
             if (cubeList[i].position.equals(m.position)) {
                 if (!gameStarted) {
