@@ -1,4 +1,4 @@
-var camera, scene, renderer, controls, mouse, raycaster, GUI, gameOver
+var camera, scene, renderer, controls, mouse, raycaster, gui, gameOver
 var rollOverMesh
 var cubeList = mineList = []
 var cubeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5)
@@ -7,9 +7,18 @@ var mineMaterial = new THREE.MeshBasicMaterial({color: 0xfeb74c, opacity: 1, tra
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rollOverMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 1, transparent: true})
 var tipGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
+var cubeGroup = new THREE.Group()
+var cubeGroupObj = new THREE.Object3D()
+var params = {
+    'reset': function() {
+        location.reload()
+    }
+//    'rotate': true
+}
 
 init()
-addGUI()
+addGui()
+autoRotate()
 
 function init() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100)
@@ -23,7 +32,7 @@ function init() {
     mouse = new THREE.Vector2()
     gameOver = false
     gameStarted = false
-    cubeList = addCubes()
+    cubeList, cubeGroup = addCubes()
     rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial)
     scene.add(rollOverMesh)
     document.body.appendChild(renderer.domElement)
@@ -39,40 +48,37 @@ function addCubes(cubeCountPerEdge=3) {
     if (cubeCountPerEdge > 5) {
         cubeCountPerEdge = 5
     }
-    for (var i=-cubeCountPerEdge/2 ; i<cubeCountPerEdge/2 ; i+=1) {
+    for (var i=-cubeCountPerEdge/2; i<cubeCountPerEdge/2; i+=1) {
         xList.push(i)
     }
     for (var x in xList)
         for (var y in yList)
             for (var z in zList) {
                     var cubeMesh = new THREE.Mesh(cubeGeo, cubeMaterial)
+//                    cubeMesh.position.set(Math.round(xList[x]), Math.round(yList[y]), Math.round(zList[z]))
                     cubeMesh.position.set(x, y, z)
                     cubeMesh.isMine = false
-                    cubeList.push(cubeMesh)
+                    cubeGroupObj.add(cubeMesh)
                 }
-    for (var i in cubeList) {
-            scene.add(cubeList[i])
-        }
+    cubeList = cubeGroupObj.children
+    scene.add(cubeGroup)
+    cubeGroup.add(cubeGroupObj)
     render()
-    return cubeList
+    return cubeList, cubeGroup
 }
 
-function addGUI() {
-    var API = {
-        'Reset': function() {
-            location.reload()
-        }
-    };
-    GUI = new dat.GUI()
-    GUI.add(API, 'Reset')
+function addGui() {
+    gui = new dat.GUI()
+    gui.add(params, 'reset')
+//    gui.add(params, 'rotate')
 }
 
 function addMines(cubeList, minesTotal=10) {
     if (minesTotal >= cubeList.length) {
         return
     }
-    cubeList.sort(() => Math.random() - 0.5);
-    mineList = cubeList.slice(0, minesTotal);
+    cubeList.sort(() => Math.random() - 0.5)
+    mineList = cubeList.slice(0, minesTotal)
     for (var i in mineList) {
         mineList[i].isMine = true
     }
@@ -210,4 +216,12 @@ function range(start, stop) {
 
 function render() {
     renderer.render(scene, camera)
+}
+
+function autoRotate() {
+    if (params.rotate) {
+        cubeGroup.rotation.y += 0.005
+        requestAnimationFrame(autoRotate)
+    }
+    render()
 }
