@@ -43,8 +43,6 @@ function init() {
     window.addEventListener('resize', onWindowResize, false)
     controls = new THREE.OrbitControls(camera, renderer.domElement)
     controls.addEventListener('change', render)
-    controls = new THREE.OrbitControls(camera, renderer.domElement)
-    controls.addEventListener('change', render)
     raycaster = new THREE.Raycaster()
     mouse = new THREE.Vector2()
 }
