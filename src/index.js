@@ -1,49 +1,66 @@
-var camera, scene, renderer, controls, mouse, raycaster, gui, gameOver
+var camera, scene, renderer, controls, mouse, raycaster, gui
+var cubeCountPerEdge = 3
 var rollOverMesh
-var cubeList = mineList = []
+var cubeList, mineList
+var cubeGroup
+var cubeGroupObj
 var cubeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5)
 var cubeMaterial = new THREE.MeshNormalMaterial()
 var mineMaterial = new THREE.MeshBasicMaterial({color: 0xfeb74c, opacity: 1, transparent: true})
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rollOverMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 1, transparent: true})
 var tipGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
-var cubeGroup = new THREE.Group()
-var cubeGroupObj = new THREE.Object3D()
+var rendererCanvas = document.createElement('canvas')
+rendererCanvas.id = 'rendererCanvas'
 var params = {
+    'cubesPerEdge': 3,
     'reset': function() {
-        location.reload()
+        cubeCountPerEdge = params.cubesPerEdge
+        while (scene.children.length > 0) {
+            scene.remove(scene.children[0])
+        }
+        main()
     }
 //    'rotate': true
 }
 
 init()
+main()
 addGui()
-autoRotate()
+//autoRotate()
 
 function init() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100)
     camera.position.z = 10
     scene = new THREE.Scene()
     scene.background = new THREE.Color(0xf0f0f0)
-    renderer = new THREE.WebGLRenderer({antialias: true})
+    renderer = new THREE.WebGLRenderer({antialias: true, canvas: rendererCanvas})
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
-    raycaster = new THREE.Raycaster()
-    mouse = new THREE.Vector2()
-    gameOver = false
-    gameStarted = false
-    cubeList, cubeGroup = addCubes()
-    rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial)
-    scene.add(rollOverMesh)
     document.body.appendChild(renderer.domElement)
     document.addEventListener('mousemove', onDocumentMouseMove, false)
     document.addEventListener('pointerdown', onDocumentMouseDown, false)
     window.addEventListener('resize', onWindowResize, false)
     controls = new THREE.OrbitControls(camera, renderer.domElement)
     controls.addEventListener('change', render)
+    controls = new THREE.OrbitControls(camera, renderer.domElement)
+    controls.addEventListener('change', render)
+    raycaster = new THREE.Raycaster()
+    mouse = new THREE.Vector2()
 }
 
-function addCubes(cubeCountPerEdge=3) {
+function main() {
+    gameOver = false
+    gameStarted = false
+    cubeList = mineList = []
+    cubeGroup = new THREE.Group()
+    cubeGroupObj = new THREE.Object3D()
+    cubeList, cubeGroup = addCubes(cubeCountPerEdge)
+    rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial)
+    scene.add(rollOverMesh)
+}
+
+function addCubes(cubeCountPerEdge) {
     var xList = yList = zList = []
     if (cubeCountPerEdge > 5) {
         cubeCountPerEdge = 5
@@ -68,7 +85,8 @@ function addCubes(cubeCountPerEdge=3) {
 
 function addGui() {
     gui = new dat.GUI()
-    gui.add(params, 'reset')
+    gui.add(params, 'cubesPerEdge', 2, 5).step(1).name("Cubes per edge")
+    gui.add(params, 'reset').name("Reset")
 //    gui.add(params, 'rotate')
 }
 
@@ -156,7 +174,7 @@ function onDocumentMouseDown(event) {
                     addMines(cubeAroundWithoutTheFirstList, 10 - mineAroundTheFirstCount)
                     addTips(cubeList)
                     m.material = cubeList[i].tip
-                    m.position.divideScalar(2).floor().multiplyScalar(1).addScalar(1)
+                    m.position.round()
                     scene.add(m)
                     render()
                     gameStarted = true
@@ -181,7 +199,7 @@ function onDocumentMouseDown(event) {
                 }
             }
         }
-        m.position.divideScalar(2).floor().multiplyScalar(1).addScalar(1)
+        m.position.round()
         scene.add(m)
         render()
     }
@@ -194,7 +212,7 @@ function onDocumentMouseMove(event) {
     if (intersects.length > 0 && !gameOver) {
         var intersect = intersects[0]
         rollOverMesh.position.copy(intersect.point)
-        rollOverMesh.position.divideScalar(2).floor().multiplyScalar(1).addScalar(1)
+        rollOverMesh.position.round()
     }
     render()
 }
