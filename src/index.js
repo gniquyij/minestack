@@ -63,7 +63,7 @@ function addCubes(cubeCountPerEdge) {
     if (cubeCountPerEdge > 5) {
         cubeCountPerEdge = 5
     }
-    for (var i=-cubeCountPerEdge/2; i<cubeCountPerEdge/2; i+=1) {
+    for (var i = - cubeCountPerEdge / 2; i<cubeCountPerEdge / 2; i += 1) {
         xList.push(i)
     }
     for (var x in xList)
@@ -88,7 +88,7 @@ function addGui() {
 //    gui.add(params, 'rotate')
 }
 
-function addMines(cubeList, minesTotal=10) {
+function addMines(cubeList, minesTotal) {
     if (minesTotal >= cubeList.length) {
         return
     }
@@ -109,7 +109,7 @@ function addTip(mineAroundCount) {
     canvas.height = 25
     var context = canvas.getContext('2d')
     context.fillStyle = 'white'
-    context.fillText(mineAroundCount, canvas.width/4, canvas.height/2)
+    context.fillText(mineAroundCount, canvas.width / 4, canvas.height / 2)
     var texture = new THREE.CanvasTexture(canvas)
     texture.needsUpdate = true
     return new THREE.MeshBasicMaterial({map: texture})
@@ -156,7 +156,7 @@ function getCubeAround(cube, cubeList) {
 }
 
 function onDocumentMouseDown(event) {
-    mouse.set((event.clientX/window.innerWidth)*2-1, -(event.clientY/window.innerHeight)*2+1)
+    mouse.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1)
     raycaster.setFromCamera(mouse, camera)
     var intersects = raycaster.intersectObjects(cubeList)
     if (intersects.length > 0) {
@@ -169,12 +169,17 @@ function onDocumentMouseDown(event) {
         for (var i in cubeList) {
             if (cubeList[i].position.equals(m.position)) {
                 if (!gameStarted) {
-                    mineAroundTheFirstCount = addRandomInt(0, 7)
+                    mineAroundTheFirstCount = addRandomInt(1, 7)
                     var cubeAroundTheFirst = getCubeAround(cubeList[i], cubeList)
                     var cubeAroundTheFirstList = cubeAroundTheFirst.listCubeAround
                     addMines(cubeAroundTheFirstList, mineAroundTheFirstCount)
-                    var cubeAroundWithoutTheFirstList = cubeList.filter(x => !cubeAroundTheFirstList.includes(x))
-                    addMines(cubeAroundWithoutTheFirstList, 10 - mineAroundTheFirstCount)
+                    var cubeTheFirstList = []
+                    for (var n in cubeAroundTheFirstList) {
+                        cubeTheFirstList.push(cubeAroundTheFirstList[n])
+                    }
+                    cubeTheFirstList.push(cubeList[i])
+                    var cubeOutOfTheFirstList = cubeList.filter(x => !cubeTheFirstList.includes(x))
+                    addMines(cubeOutOfTheFirstList, 10 - mineAroundTheFirstCount)
                     addTips(cubeList)
                     m.material = cubeList[i].tip
                     m.position.round()
@@ -192,13 +197,16 @@ function onDocumentMouseDown(event) {
                         }
                     }
                     scene.remove(rollOverMesh)
+                    return
                 }
                 m.material = cubeList[i].tip
                 var cubeAroundM = getCubeAround(cubeList[i], cubeList)
                 var cubeAroundMList = cubeAroundM.listCubeAround
                 var cubeAroundMListIndex = range(0, Math.round(cubeAroundMList.length / 2))
                 for (var i in cubeAroundMListIndex) {
-                    cubeAroundMList[cubeAroundMListIndex[i]].material = cubeAroundMList[cubeAroundMListIndex[i]].tip
+                    if (!cubeAroundMList[cubeAroundMListIndex[i]].isMine) {
+                        cubeAroundMList[cubeAroundMListIndex[i]].material = cubeAroundMList[cubeAroundMListIndex[i]].tip
+                    }
                 }
             }
         }
@@ -209,7 +217,7 @@ function onDocumentMouseDown(event) {
 }
 
 function onDocumentMouseMove(event) {
-    mouse.set((event.clientX/window.innerWidth)*2-1, -(event.clientY/window.innerHeight)*2+1)
+    mouse.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1)
     raycaster.setFromCamera(mouse, camera)
     var intersects = raycaster.intersectObjects(cubeList)
     if (intersects.length > 0 && !gameOver) {
@@ -228,7 +236,7 @@ function onWindowResize() {
 
 function range(start, stop) {
     var rangeList = []
-    for (var i=start; i<=stop; i++) {
+    for (var i = start; i <= stop; i ++) {
         rangeList.push(i.toString())
     }
     return rangeList
