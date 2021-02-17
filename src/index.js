@@ -1,14 +1,15 @@
 var camera, scene, renderer, controls, mouse, raycaster, gui
 var cubeCountPerEdge = 3
 var rollOverMesh
-var cubeList, mineList
+var cubeList, mineList, nonMineList
 var cubeGroup
 var cubeGroupObj
 var cubeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5)
 var cubeMaterial = new THREE.MeshNormalMaterial()
 var mineMaterial = new THREE.MeshBasicMaterial({color: 0xfeb74c, opacity: 1, transparent: true})
+var mineRevealedMaterial = new THREE.MeshBasicMaterial({color: 0x00c91e, opacity: 1, transparent: true})
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
-var rollOverMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 1, transparent: true})
+var rollOverMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true})
 var tipGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
@@ -50,7 +51,9 @@ function init() {
 function main() {
     gameOver = false
     gameStarted = false
-    cubeList = mineList = []
+    cubeList = []
+    mineList = []
+    nonMineList = []
     cubeGroup = new THREE.Group()
     cubeGroupObj = new THREE.Object3D()
     cubeList, cubeGroup = addCubes(cubeCountPerEdge)
@@ -72,6 +75,7 @@ function addCubes(cubeCountPerEdge) {
                     var cubeMesh = new THREE.Mesh(cubeGeo, cubeMaterial)
                     cubeMesh.position.set(Math.round(xList[x]), Math.round(yList[y]), Math.round(zList[z]))
                     cubeMesh.isMine = false
+                    cubeMesh.isRevealed = false
                     cubeGroupObj.add(cubeMesh)
                 }
     cubeList = cubeGroupObj.children
@@ -93,7 +97,7 @@ function addMines(cubeList, minesTotal) {
         return
     }
     cubeList.sort(() => Math.random() - 0.5)
-    mineList = cubeList.slice(0, minesTotal)
+    var mineList = cubeList.slice(0, minesTotal)
     for (var i in mineList) {
         mineList[i].isMine = true
     }
@@ -181,15 +185,23 @@ function onDocumentMouseDown(event) {
                     var cubeOutOfTheFirstList = cubeList.filter(x => !cubeTheFirstList.includes(x))
                     addMines(cubeOutOfTheFirstList, 10 - mineAroundTheFirstCount)
                     addTips(cubeList)
+                    for (var q in cubeList) {
+                        if (cubeList[q].isMine) {
+                            mineList.push(cubeList[q])
+                        } else {
+                            nonMineList.push(cubeList[q])
+                        }
+                    }
                     m.material = cubeList[i].tip
                     m.position.round()
                     scene.add(m)
+                    cubeList[i].isRevealed = true
                     render()
                     gameStarted = true
                     return
                 }
                 if (cubeList[i].isMine) {
-                    for (c in cubeList) {
+                    for (var c in cubeList) {
                         cubeList[c].material = cubeList[c].tip
                         if (cubeList[c].isMine) {
                             cubeList[c].material = mineMaterial
@@ -200,12 +212,25 @@ function onDocumentMouseDown(event) {
                     return
                 }
                 m.material = cubeList[i].tip
+                cubeList[i].isRevealed = true
                 var cubeAroundM = getCubeAround(cubeList[i], cubeList)
                 var cubeAroundMList = cubeAroundM.listCubeAround
                 var cubeAroundMListIndex = range(0, Math.round(cubeAroundMList.length / 2))
                 for (var i in cubeAroundMListIndex) {
                     if (!cubeAroundMList[cubeAroundMListIndex[i]].isMine) {
                         cubeAroundMList[cubeAroundMListIndex[i]].material = cubeAroundMList[cubeAroundMListIndex[i]].tip
+                        cubeAroundMList[cubeAroundMListIndex[i]].isRevealed = true
+                    }
+                }
+                var cubeRevealedCount = 0
+                for (var i in nonMineList) {
+                    if (nonMineList[i].isRevealed) {
+                        cubeRevealedCount ++
+                    }
+                }
+                if (cubeRevealedCount == nonMineList.length) {
+                    for (var q in mineList) {
+                        mineList[q].material = mineRevealedMaterial
                     }
                 }
             }
