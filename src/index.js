@@ -134,6 +134,11 @@ function getCubeAround(cube, cubeList) {
                 var cubeAround = new THREE.Vector3(parseInt(aList[a]), parseInt(bList[b]), parseInt(cList[c]))
                 abcList.push(cubeAround)
             }
+    for (var i in abcList) {
+        if (abcList[i].equals(cube.position)) {
+            abcList.splice(i, 1)
+        }
+    }
     var mineAroundCount = 0
     for (var i in cubeList)
         for (var v in abcList) {
