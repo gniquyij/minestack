@@ -173,7 +173,7 @@ function onDocumentMouseDown(event) {
         for (var i in cubeList) {
             if (cubeList[i].position.equals(m.position)) {
                 if (!gameStarted) {
-                    mineAroundTheFirstCount = addRandomInt(1, 7)
+                    mineAroundTheFirstCount = addRandomInt(1, 6)
                     var cubeAroundTheFirst = getCubeAround(cubeList[i], cubeList)
                     var cubeAroundTheFirstList = cubeAroundTheFirst.listCubeAround
                     addMines(cubeAroundTheFirstList, mineAroundTheFirstCount)
