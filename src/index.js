@@ -163,7 +163,7 @@ function onDocumentMouseDown(event) {
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1)
     raycaster.setFromCamera(mouse, camera)
     var intersects = raycaster.intersectObjects(cubeList)
-    if (intersects.length > 0) {
+    if (intersects.length > 0 && !gameOver) {
         var intersect = intersects[0]
         var m = new THREE.Mesh(tipGeo, cubeMaterial)
         m.position.copy(intersect.point)
@@ -205,9 +205,9 @@ function onDocumentMouseDown(event) {
                         cubeList[c].material = cubeList[c].tip
                         if (cubeList[c].isMine) {
                             cubeList[c].material = mineMaterial
-                            gameOver = true
                         }
                     }
+                    gameOver = true
                     scene.remove(rollOverMesh)
                     return
                 }
@@ -232,6 +232,8 @@ function onDocumentMouseDown(event) {
                     for (var q in mineList) {
                         mineList[q].material = mineRevealedMaterial
                     }
+                    gameOver = true
+                    scene.remove(rollOverMesh)
                 }
             }
         }
