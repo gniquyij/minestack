@@ -13,6 +13,7 @@ var rollOverMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.
 var tipGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
+var startedAt, stoppedAt
 var params = {
     'cubesPerEdge': 3,
     'reset': function() {
@@ -51,6 +52,8 @@ function init() {
 function main() {
     gameOver = false
     gameStarted = false
+    startedAt = 0
+    stoppedAt = 0
     cubeList = []
     mineList = []
     nonMineList = []
@@ -126,6 +129,14 @@ function addTips(cubeList) {
     }
 }
 
+function autoRotate() {
+    if (params.rotate) {
+        cubeGroup.rotation.y += 0.005
+        requestAnimationFrame(autoRotate)
+    }
+    render()
+}
+
 function getCubeAround(cube, cubeList) {
     var abcList = []
     var cubeAroundList = []
@@ -198,6 +209,7 @@ function onDocumentMouseDown(event) {
                     cubeList[i].isRevealed = true
                     render()
                     gameStarted = true
+                    startedAt = new Date().getTime()
                     return
                 }
                 if (cubeList[i].isMine) {
@@ -233,6 +245,8 @@ function onDocumentMouseDown(event) {
                         mineList[q].material = mineRevealedMaterial
                     }
                     gameOver = true
+                    stoppedAt = new Date().getTime()
+                    timer(startedAt, stoppedAt)
                     scene.remove(rollOverMesh)
                 }
             }
@@ -273,10 +287,6 @@ function render() {
     renderer.render(scene, camera)
 }
 
-function autoRotate() {
-    if (params.rotate) {
-        cubeGroup.rotation.y += 0.005
-        requestAnimationFrame(autoRotate)
-    }
-    render()
+function timer(start, stop) {
+    var duration = stop - start
 }
