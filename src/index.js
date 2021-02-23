@@ -13,7 +13,7 @@ var rollOverMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.
 var tipGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
-var startedAt, stoppedAt
+var timer, timerStopped, hour, minute, second
 var params = {
     'cubesPerEdge': 3,
     'reset': function() {
@@ -47,13 +47,17 @@ function init() {
     controls.addEventListener('change', render)
     raycaster = new THREE.Raycaster()
     mouse = new THREE.Vector2()
+    timer = document.getElementById('stopwatch')
 }
 
 function main() {
     gameOver = false
     gameStarted = false
-    startedAt = 0
-    stoppedAt = 0
+    timerStopped = true
+    hour = 0
+    minute = 0
+    second = 0
+    timer.innerHTML = '0' + hour + ':' + '0' + minute + ':' + '0' + second
     cubeList = []
     mineList = []
     nonMineList = []
@@ -209,7 +213,7 @@ function onDocumentMouseDown(event) {
                     cubeList[i].isRevealed = true
                     render()
                     gameStarted = true
-                    startedAt = new Date().getTime()
+                    startTimer()
                     return
                 }
                 if (cubeList[i].isMine) {
@@ -220,6 +224,7 @@ function onDocumentMouseDown(event) {
                         }
                     }
                     gameOver = true
+                    stopTimer()
                     scene.remove(rollOverMesh)
                     return
                 }
@@ -245,8 +250,7 @@ function onDocumentMouseDown(event) {
                         mineList[q].material = mineRevealedMaterial
                     }
                     gameOver = true
-                    stoppedAt = new Date().getTime()
-                    timer(startedAt, stoppedAt)
+                    stopTimer()
                     scene.remove(rollOverMesh)
                 }
             }
@@ -287,6 +291,44 @@ function render() {
     renderer.render(scene, camera)
 }
 
-function timer(start, stop) {
-    var duration = stop - start
+function startTimer() {
+    if (timerStopped) {
+        timerStopped = false
+        timerCycle()
+    }
+}
+
+function stopTimer() {
+    if (!timerStopped) {
+        timerStopped = true
+    }
+}
+
+function timerCycle() {
+    if (!timerStopped) {
+        second = parseInt(second)
+        minute = parseInt(minute)
+        hour = parseInt(hour)
+        second = second + 1
+        if (second == 60) {
+            minute = minute + 1
+            second = 0
+        }
+        if (minute == 60) {
+            hour = hour + 1
+            minute = 0
+            second = 0
+        }
+        if (second == 0 || second < 10) {
+            second = '0' + second
+        }
+        if (minute == 0 || minute < 10) {
+            minute = '0' + minute
+        }
+        if (hour == 0 || hour < 10) {
+            hour = '0' + hour
+        }
+        timer.innerHTML = hour + ':' + minute + ':' + second
+        setTimeout('timerCycle()', 1000)
+    }
 }
