@@ -94,8 +94,8 @@ function addCubes(cubeCountPerEdge) {
 
 function addGui() {
     gui = new dat.GUI()
-    gui.add(params, 'cubesPerEdge', 2, 5).step(1).name("Cubes per edge")
-    gui.add(params, 'reset').name("Reset")
+    gui.add(params, 'cubesPerEdge', 2, 5).step(1).name('Cubes per edge')
+    gui.add(params, 'reset').name('Reset')
 //    gui.add(params, 'rotate')
 }
 
