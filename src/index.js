@@ -62,7 +62,7 @@ function main() {
     hour = 0
     minute = 0
     second = 0
-    timer.innerHTML = '0' + hour + ':' + '0' + minute + ':' + '0' + second
+    timer.innerHTML = '00:00:00'
     cubeList = []
     mineList = []
     nonMineList = []
