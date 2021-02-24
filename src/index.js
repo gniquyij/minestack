@@ -15,7 +15,7 @@ var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
 var timer, timerStopped, hour, minute, second
 var audioListener, audioLoader, cubeSound
-var cubeSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test.mp3'
+var cubeSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test.mp3' //cr: pikachu
 var params = {
     'cubesPerEdge': 3,
     'reset': function() {
