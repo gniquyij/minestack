@@ -14,6 +14,8 @@ var tipGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
 var timer, timerStopped, hour, minute, second
+var audioListener, audioLoader, cubeSound
+var cubeSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test.mp3'
 var params = {
     'cubesPerEdge': 3,
     'reset': function() {
@@ -48,6 +50,9 @@ function init() {
     raycaster = new THREE.Raycaster()
     mouse = new THREE.Vector2()
     timer = document.getElementById('stopwatch')
+    audioListener = new THREE.AudioListener()
+    camera.add(audioListener)
+    audioLoader = new THREE.AudioLoader()
 }
 
 function main() {
@@ -66,6 +71,7 @@ function main() {
     cubeList, cubeGroup = addCubes(cubeCountPerEdge)
     rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial)
     scene.add(rollOverMesh)
+    cubeSound = new THREE.Audio(audioListener)
 }
 
 function addCubes(cubeCountPerEdge) {
@@ -174,6 +180,14 @@ function getCubeAround(cube, cubeList) {
     }
 }
 
+function loadAudio(sound, soundPath) {
+    audioLoader.load(soundPath, function(buffer) {
+        sound.setBuffer(buffer)
+        sound.setVolume(0.5)
+        sound.play()
+    })
+}
+
 function onDocumentMouseDown(event) {
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1)
     raycaster.setFromCamera(mouse, camera)
@@ -214,6 +228,7 @@ function onDocumentMouseDown(event) {
                     render()
                     gameStarted = true
                     startTimer()
+                    loadAudio(cubeSound, cubeSoundPath)
                     return
                 }
                 if (cubeList[i].isMine) {
@@ -257,6 +272,7 @@ function onDocumentMouseDown(event) {
         }
         m.position.round()
         scene.add(m)
+        loadAudio(cubeSound, cubeSoundPath)
         render()
     }
 }
