@@ -13,7 +13,7 @@ var rollOverMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.
 var tipGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
-var timer, timerStopped, hour, minute, second
+var timer, timerStopped, hour, minute, second, record
 var audioListener, audioLoader, cubeSound
 var cubeSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test.mp3' //cr: pikachu
 var params = {
@@ -50,6 +50,7 @@ function init() {
     raycaster = new THREE.Raycaster()
     mouse = new THREE.Vector2()
     timer = document.getElementById('stopwatch')
+    record = document.getElementById('record')
     audioListener = new THREE.AudioListener()
     camera.add(audioListener)
     audioLoader = new THREE.AudioLoader()
@@ -267,6 +268,7 @@ function onDocumentMouseDown(event) {
                     gameOver = true
                     stopTimer()
                     scene.remove(rollOverMesh)
+                    record.innerHTML = timer.innerHTML
                 }
             }
         }
