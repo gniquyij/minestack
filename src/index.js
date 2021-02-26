@@ -14,6 +14,7 @@ var tipGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
 var timer, timerStopped, hour, minute, second, record
+var gameRound = 0
 var audioListener, audioLoader, cubeSound
 var cubeSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test.mp3' //cr: pikachu
 var params = {
@@ -268,7 +269,14 @@ function onDocumentMouseDown(event) {
                     gameOver = true
                     stopTimer()
                     scene.remove(rollOverMesh)
-                    record.innerHTML = timer.innerHTML
+                    recordToSecond = timeToSecond(record)
+                    timerToSecond = timeToSecond(timer)
+                    if (gameRound == 0) {
+                        record.innerHTML = timer.innerHTML
+                        gameRound ++
+                    } else if (timerToSecond < recordToSecond) {
+                        record.innerHTML = timer.innerHTML
+                    }
                 }
             }
         }
@@ -349,4 +357,12 @@ function timerCycle() {
         timer.innerHTML = hour + ':' + minute + ':' + second
         setTimeout('timerCycle()', 1000)
     }
+}
+
+function timeToSecond(time) {
+    timeToArray = time.innerHTML.split(":")
+    h = parseInt(timeToArray[0])
+    m = parseInt(timeToArray[1])
+    s = parseInt(timeToArray[2])
+    return h * 60 * 60 + m * 60 + s
 }
