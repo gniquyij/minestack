@@ -147,6 +147,7 @@ function addTips(cubeList) {
 function autoRotate() {
     if (params.rotate) {
         cubeGroup.rotation.y += 0.005
+        rollOverMesh.rotation.y += 0.005
         requestAnimationFrame(autoRotate)
     }
     render()
