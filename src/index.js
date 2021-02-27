@@ -55,12 +55,12 @@ function init() {
     audioListener = new THREE.AudioListener()
     camera.add(audioListener)
     audioLoader = new THREE.AudioLoader()
-    light = new THREE.HemisphereLight(0xababab, 0x030303)
-    light.position.set(-2, 3, 20)
-    scene.add(light)
 }
 
 function main() {
+    light = new THREE.HemisphereLight(0xababab, 0x030303)
+    light.position.set(-2, 3, 20)
+    scene.add(light)
     gameOver = false
     gameStarted = false
     timerStopped = true
