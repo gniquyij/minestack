@@ -5,7 +5,7 @@ var cubeList, mineList, nonMineList
 var cubeGroup
 var cubeGroupObj
 var cubeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5)
-var cubeMaterial = new THREE.MeshNormalMaterial()
+var cubeMaterial = new THREE.MeshStandardMaterial()
 var mineMaterial = new THREE.MeshBasicMaterial({color: 0xfeb74c, opacity: 1, transparent: true})
 var mineRevealedMaterial = new THREE.MeshBasicMaterial({color: 0x00c91e, opacity: 1, transparent: true})
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
