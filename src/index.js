@@ -6,10 +6,10 @@ var cubeGroup
 var cubeGroupObj
 var cubeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5)
 var cubeMaterial = new THREE.MeshStandardMaterial()
-var mineMaterial = new THREE.MeshBasicMaterial({color: 0xfeb74c, opacity: 1, transparent: true})
-var mineRevealedMaterial = new THREE.MeshBasicMaterial({color: 0x00c91e, opacity: 1, transparent: true})
+var mineMaterial = new THREE.MeshStandardMaterial({color: '#feb74c', opacity: 1, transparent: true})
+var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: '#00c91e', opacity: 1, transparent: true})
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
-var rollOverMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, opacity: 0.5, transparent: true})
+var rollOverMaterial = new THREE.MeshStandardMaterial({color: '#ff0000', opacity: 0.5, transparent: true})
 var tipGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
@@ -18,6 +18,24 @@ var gameRound = 0
 var audioListener, audioLoader, cubeSound, bgSound
 var cubeSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-cube.mp3' //cr: pikachu
 var bgSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-bg.mp3' //bootleg: chant iii
+var tipColors = [
+    '#1401f5',
+    '#377e22',
+    '#e83323',
+    '#05017b',
+    '#77150f',
+    '#377e7e',
+    '#000000',
+    '#808080',
+    '#1401f5',
+    '#377e22',
+    '#e83323',
+    '#05017b',
+    '#77150f',
+    '#377e7e',
+    '#000000',
+    '#808080'
+]
 var params = {
     'bgm': false,
     'cubesPerEdge': 3,
@@ -39,7 +57,7 @@ function init() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100)
     camera.position.z = 10
     scene = new THREE.Scene()
-    scene.background = new THREE.Color(0xf0f0f0)
+    scene.background = new THREE.Color('#f0f0f0')
     renderer = new THREE.WebGLRenderer({antialias: true, canvas: rendererCanvas})
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -59,7 +77,7 @@ function init() {
 }
 
 function main() {
-    light = new THREE.HemisphereLight(0xababab, 0x030303)
+    light = new THREE.HemisphereLight('#ababab', '#030303')
     light.position.set(-2, 3, 20)
     scene.add(light)
     gameOver = false
@@ -132,14 +150,20 @@ function addRandomInt(min, max) {
 
 function addTip(mineAroundCount) {
     var canvas = document.createElement('canvas')
-    canvas.width = 25
-    canvas.height = 25
+    canvas.width = 500
+    canvas.height = 500
     var context = canvas.getContext('2d')
-    context.fillStyle = 'white'
-    context.fillText(mineAroundCount, canvas.width / 4, canvas.height / 2)
+    context.fillStyle = '#ffffff'
+    context.fillRect(0, 0, canvas.width, canvas.height)
+    context.font = 'Bold 250px Times'
+    context.textAlign = 'center'
+    if (mineAroundCount == 0) {
+        context.fillStyle = '#808080'
+    }
+    context.fillStyle = tipColors[mineAroundCount - 1]
+    context.fillText(mineAroundCount, canvas.width / 2, canvas.height * 2 / 3)
     var texture = new THREE.CanvasTexture(canvas)
-    texture.needsUpdate = true
-    return new THREE.MeshBasicMaterial({map: texture})
+    return new THREE.MeshStandardMaterial({map: texture})
 }
 
 function addTips(cubeList) {
