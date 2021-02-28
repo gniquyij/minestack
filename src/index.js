@@ -15,9 +15,11 @@ var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
 var timer, timerStopped, hour, minute, second, record
 var gameRound = 0
-var audioListener, audioLoader, cubeSound
+var audioListener, audioLoader, cubeSound, bgSound
 var cubeSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-cube.mp3' //cr: pikachu
+var bgSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-bg.mp3' //bootleg: chant iii
 var params = {
+    'bgm': false,
     'cubesPerEdge': 3,
     'reset': function() {
         cubeCountPerEdge = params.cubesPerEdge
@@ -25,14 +27,13 @@ var params = {
             scene.remove(scene.children[0])
         }
         main()
-    }
-//    'rotate': true
+    },
+    'rotate': false
 }
 
 init()
 main()
 addGui()
-//autoRotate()
 
 function init() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100)
@@ -77,6 +78,9 @@ function main() {
     rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial)
     scene.add(rollOverMesh)
     cubeSound = new THREE.Audio(audioListener)
+    bgSound = new THREE.Audio(audioListener)
+    autoRotate()
+    playBgm()
 }
 
 function addCubes(cubeCountPerEdge) {
@@ -106,8 +110,9 @@ function addCubes(cubeCountPerEdge) {
 function addGui() {
     gui = new dat.GUI()
     gui.add(params, 'cubesPerEdge', 2, 5).step(1).name('Cubes per edge')
+    gui.add(params, 'rotate').name('Rotate')
+    gui.add(params, 'bgm').name('Sound')
     gui.add(params, 'reset').name('Reset')
-//    gui.add(params, 'rotate')
 }
 
 function addMines(cubeList, minesTotal) {
@@ -141,6 +146,12 @@ function addTips(cubeList) {
     for (var i in cubeList) {
         var cubeAround = getCubeAround(cubeList[i], cubeList)
         cubeList[i].tip = addTip(cubeAround.countMineAround)
+    }
+}
+
+function playBgm() {
+    if (params.bgm) {
+        loadAudio(bgSound, bgSoundPath, true)
     }
 }
 
@@ -186,10 +197,13 @@ function getCubeAround(cube, cubeList) {
     }
 }
 
-function loadAudio(sound, soundPath) {
+function loadAudio(sound, soundPath, onLoop=false) {
     audioLoader.load(soundPath, function(buffer) {
         sound.setBuffer(buffer)
         sound.setVolume(0.5)
+        if (onLoop) {
+            sound.setLoop(true)
+        }
         sound.play()
     })
 }
