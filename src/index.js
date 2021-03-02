@@ -6,7 +6,7 @@ var cubeGroup
 var cubeGroupObj
 var cubeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5)
 var cubeMaterial = new THREE.MeshStandardMaterial()
-var mineTexture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-mine.png');
+var mineTexture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-mine.jpg')
 var mineMaterial = new THREE.MeshStandardMaterial({map: mineTexture})
 var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: '#00c91e', opacity: 1, transparent: true})
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
