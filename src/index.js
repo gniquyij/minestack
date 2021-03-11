@@ -266,9 +266,7 @@ function onDocumentMouseDown(event) {
                             nonMineList.push(cubeList[q])
                         }
                     }
-                    m.material = cubeList[i].tip
-                    m.position.round()
-                    scene.add(m)
+                    cubeList[i].material = cubeList[i].tip
                     cubeList[i].isRevealed = true
                     render()
                     gameStarted = true
@@ -288,7 +286,7 @@ function onDocumentMouseDown(event) {
                     scene.remove(rollOverMesh)
                     return
                 }
-                m.material = cubeList[i].tip
+                cubeList[i].material = cubeList[i].tip
                 cubeList[i].isRevealed = true
                 var cubeAroundM = getCubeAround(cubeList[i], cubeList)
                 var cubeAroundMList = cubeAroundM.listCubeAround
@@ -323,8 +321,6 @@ function onDocumentMouseDown(event) {
                 }
             }
         }
-        m.position.round()
-        scene.add(m)
         loadAudio(cubeSound, cubeSoundPath)
         render()
     }
