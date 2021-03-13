@@ -96,6 +96,7 @@ function main() {
     cubeList, cubeGroup = addCubes(cubeCountPerEdge)
     rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial)
     scene.add(rollOverMesh)
+    cubeGroup.add(rollOverMesh)
     cubeSound = new THREE.Audio(audioListener)
     bgSound = new THREE.Audio(audioListener)
     autoRotate()
@@ -183,7 +184,6 @@ function playBgm() {
 function autoRotate() {
     if (params.rotate) {
         cubeGroup.rotation.y += 0.005
-        rollOverMesh.rotation.y += 0.005
         requestAnimationFrame(autoRotate)
     }
     render()
@@ -241,9 +241,7 @@ function onDocumentMouseDown(event) {
         var intersect = intersects[0]
         var m = new THREE.Mesh(tipGeo, cubeMaterial)
         m.position.copy(intersect.point)
-        m.position.x = Math.round(m.position.x)
-        m.position.y = Math.round(m.position.y)
-        m.position.z = Math.round(m.position.z)
+        m.position.round()
         for (var i in cubeList) {
             if (cubeList[i].position.equals(m.position)) {
                 if (!gameStarted) {
@@ -332,8 +330,14 @@ function onDocumentMouseMove(event) {
     var intersects = raycaster.intersectObjects(cubeList)
     if (intersects.length > 0 && !gameOver) {
         var intersect = intersects[0]
-        rollOverMesh.position.copy(intersect.point)
-        rollOverMesh.position.round()
+        var n = new THREE.Mesh(tipGeo, cubeMaterial)
+        n.position.copy(intersect.point)
+        n.position.round()
+        for (var i in cubeList) {
+            if (cubeList[i].position.equals(n.position)) {
+                rollOverMesh.position.copy(n.position)
+            }
+        }
     }
     render()
 }
