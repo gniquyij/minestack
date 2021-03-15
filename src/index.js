@@ -6,12 +6,12 @@ var cubeGroup
 var cubeGroupObj
 var cubeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5)
 var cubeMaterial = new THREE.MeshStandardMaterial()
-var mineTexture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-mine.jpg')
+var mineTexture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/mine.jpg')
 var mineMaterial = new THREE.MeshStandardMaterial({map: mineTexture})
 var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: '#00c91e', opacity: 1, transparent: true})
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rollOverMaterial = new THREE.MeshStandardMaterial({color: '#ff0000', opacity: 0.5, transparent: true})
-var flagTexture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-flag.jpg')
+var flagTexture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/flag.jpg')
 var flagMaterial = new THREE.MeshStandardMaterial({map: flagTexture})
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
