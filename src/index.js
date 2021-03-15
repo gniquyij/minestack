@@ -11,7 +11,8 @@ var mineMaterial = new THREE.MeshStandardMaterial({map: mineTexture})
 var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: '#00c91e', opacity: 1, transparent: true})
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rollOverMaterial = new THREE.MeshStandardMaterial({color: '#ff0000', opacity: 0.5, transparent: true})
-var tipGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
+var flagTexture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-flag.jpg')
+var flagMaterial = new THREE.MeshStandardMaterial({map: flagTexture})
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
 var timer, timerStopped, hour, minute, second, record
@@ -65,8 +66,9 @@ function init() {
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.appendChild(renderer.domElement)
-    document.addEventListener('mousemove', onDocumentMouseMove, false)
-    document.addEventListener('pointerdown', onDocumentMouseDown, false)
+    document.addEventListener('mousemove', onMouseMove, false)
+    document.addEventListener('pointerdown', onMouseSingleClick, false)
+    document.addEventListener('dblclick', onMouseDoubleClick, false)
     window.addEventListener('resize', onWindowResize, false)
     controls = new THREE.OrbitControls(camera, renderer.domElement)
     controls.addEventListener('change', render)
@@ -231,17 +233,14 @@ function playAudio(sound, soundIsOn=true, onLoop=false) {
     }
 }
 
-function onDocumentMouseDown(event) {
+function onMouseDoubleClick(event) {
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1)
     raycaster.setFromCamera(mouse, camera)
     var intersects = raycaster.intersectObjects(cubeList)
     if (intersects.length > 0 && !gameOver) {
         var intersect = intersects[0]
-        var m = new THREE.Mesh(tipGeo, cubeMaterial)
-        m.position.copy(intersect.point)
-        m.position.round()
         for (var i in cubeList) {
-            if (cubeList[i].position.equals(m.position)) {
+            if (cubeList[i].position.equals(intersect.point.round())) {
                 if (!gameStarted) {
                     mineAroundTheFirstCount = addRandomInt(1, 6)
                     var cubeAroundTheFirst = getCubeAround(cubeList[i], cubeList)
@@ -322,18 +321,30 @@ function onDocumentMouseDown(event) {
     }
 }
 
-function onDocumentMouseMove(event) {
+function onMouseMove(event) {
     mouse.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1)
     raycaster.setFromCamera(mouse, camera)
     var intersects = raycaster.intersectObjects(cubeList)
     if (intersects.length > 0 && !gameOver) {
         var intersect = intersects[0]
-        var n = new THREE.Mesh(tipGeo, cubeMaterial)
-        n.position.copy(intersect.point)
-        n.position.round()
         for (var i in cubeList) {
-            if (cubeList[i].position.equals(n.position)) {
-                rollOverMesh.position.copy(n.position)
+            if (cubeList[i].position.equals(intersect.point.round())) {
+                rollOverMesh.position.copy(intersect.point.round())
+            }
+        }
+    }
+    render()
+}
+
+function onMouseSingleClick(event) {
+    mouse.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight) * 2 + 1)
+    raycaster.setFromCamera(mouse, camera)
+    var intersects = raycaster.intersectObjects(cubeList)
+    if (intersects.length > 0 && !gameOver) {
+        var intersect = intersects[0]
+        for (var i in cubeList) {
+            if (cubeList[i].position.equals(intersect.point.round())) {
+                cubeList[i].material = flagMaterial
             }
         }
     }
