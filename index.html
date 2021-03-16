@@ -3,12 +3,11 @@
 <head>
     <title>minestack</title>
     <style>
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+        canvas {position:absolute; top:0; left:0}
+        #gui {position:absolute; left:50%; transform:translate(-50%, 0)}
+        #guiParent {position:absolute; z-index:2}
     </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-K806KFKNRQ"></script>
     <script>
@@ -21,13 +20,17 @@
 <body>
     <div style="display:flex; justify-content:center">
         <div style="position:absolute; z-index:1">
-            <div style="font-size:20px">
-                <a href="https://github.com/gniquyij/minestack" target="_blank" rel="noopener">minestack</a> - classic mode -
-                by <a href="https://github.com/gniquyij" target="_blank" rel="noopener">Yuqing Ji</a>
+            <div id="stopwatch" style="font-size:50px; margin-top:80px; display:flex; justify-content:center">00:00:00</div>
+            <div style="display:flex; justify-content:center"><span>Record:</span>&ensp;<span id="record">00:00:00</span></div>
+        </div>
+    </div>
+    <div style="display:flex; justify-content:center">
+        <div style="position:absolute; z-index:1; bottom:105px">
+            <div style="display:flex; justify-content:center; margin-bottom:5px"><strong>click</strong>: flag,&ensp;<strong>double click</strong>: reveal</div>
+            <div style="display:flex; justify-content:center">
+                <a href="https://github.com/gniquyij/minestack" target="_blank" rel="noopener">minestack</a>&ensp;by&ensp;<a href="https://github.com/gniquyij" target="_blank" rel="noopener">Yuqing Ji</a>
             </div>
-            <div style="font-size:20px; display:flex; justify-content:center"><strong>click</strong>: flag,&ensp;<strong>double click</strong>: reveal</div>
-            <div id="stopwatch" style="font-size:50px; margin-top:50px; display:flex; justify-content:center">00:00:00</div>
-            <div style="font-size:20px; display:flex; justify-content:center"><span>Record:</span>&ensp;<span id="record">00:00:00</span></div>
+        </div>
     </div>
     <script src="src/three.js"></script>
     <script src="src/dat.gui.js"></script>
