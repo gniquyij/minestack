@@ -52,6 +52,7 @@ var params = {
     },
     'rotate': false
 }
+var touchTime = new Date().getTime()
 
 init()
 main()
@@ -67,8 +68,7 @@ function init() {
     renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.appendChild(renderer.domElement)
     document.addEventListener('mousemove', onMouseMove, false)
-    document.addEventListener('pointerdown', onMouseSingleClick, false)
-    document.addEventListener('dblclick', onMouseDoubleClick, false)
+    document.addEventListener('pointerdown', onMouseClick, false)
     window.addEventListener('resize', onWindowResize, false)
     controls = new THREE.OrbitControls(camera, renderer.domElement)
     controls.addEventListener('change', render)
@@ -234,6 +234,16 @@ function playAudio(sound, soundIsOn=true, onLoop=false) {
     if (soundIsOn) {
         sound.play()
     }
+}
+
+function onMouseClick(event) {
+    var delay = 500
+    var delta = new Date().getTime() - touchTime
+    onMouseSingleClick(event)
+    if (delta < delay) {
+        onMouseDoubleClick(event)
+    }
+    touchTime = new Date().getTime()
 }
 
 function onMouseDoubleClick(event) {
