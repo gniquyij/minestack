@@ -21,6 +21,7 @@ var cubeSound, bgSound
 var cubeSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-cube.mp3' //cr: pikachu
 var bgSoundIsOn = false
 var bgSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-bg.mp3' //bootleg: chant iii
+var touchTime = new Date().getTime()
 var tipColors = [
     '#1401f5',
     '#377e22',
@@ -52,7 +53,6 @@ var params = {
     },
     'rotate': false
 }
-var touchTime = new Date().getTime()
 
 init()
 main()
