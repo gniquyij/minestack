@@ -50,6 +50,7 @@ var params = {
             scene.remove(scene.children[0])
         }
         main()
+        gui.close()
     },
     'rotate': false
 }
