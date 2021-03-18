@@ -20,7 +20,7 @@ var gameRound = 0
 var cubeSound, bgSound
 var cubeSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-cube.mp3' //cr: pikachu
 var bgSoundIsOn = false
-var bgSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-bg.mp3' //bootleg: chant iii
+var bgSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/bg.mp3' //bootleg: chant iii
 var touchTime = new Date().getTime()
 var tipColors = [
     '#1401f5',
@@ -279,7 +279,7 @@ function onMouseDoubleClick(event) {
                     render()
                     gameStarted = true
                     startTimer()
-                    playAudio(cubeSound)
+//                    playAudio(cubeSound)
                     return
                 }
                 if (cubeList[i].isMine) {
@@ -329,7 +329,7 @@ function onMouseDoubleClick(event) {
                 }
             }
         }
-        playAudio(cubeSound)
+//        playAudio(cubeSound)
         render()
     }
 }
