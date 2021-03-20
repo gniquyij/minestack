@@ -134,8 +134,8 @@ function addGui() {
     gui.domElement.id = 'gui'
     gui_position = document.getElementsByClassName('dg ac')[0].setAttribute("id", "guiParent")
     gui.close()
-    gui.add(params, 'cubesPerEdge', 2, 5).step(1).name('Cubes per edge')
-    gui.add(params, 'rotate').name('Rotate')
+//    gui.add(params, 'cubesPerEdge', 2, 5).step(1).name('Cubes per edge')
+//    gui.add(params, 'rotate').name('Rotate')
     gui.add(params, 'bgSound').name('Sound')
     gui.add(params, 'reset').name('Reset')
 }
