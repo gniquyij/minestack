@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>minestack</title>
+    <style>
+        canvas {position:absolute; top:0; left:0}
+        #gui {position:absolute; left:50%; transform:translate(-50%, 0)}
+        #guiParent {position:absolute; z-index:2}
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K806KFKNRQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-K806KFKNRQ');
+    </script>
+</head>
+<body>
+<div style="display:flex; justify-content:center">
+    <div style="position:absolute; z-index:1">
+        <div id="stopwatch" style="font-size:50px; margin-top:80px; display:flex; justify-content:center">00:00:00</div>
+        <div style="display:flex; justify-content:center">最佳成绩：<span id="record" style="display:inline-flex; align-items:center">00:00:00</span></div>
+    </div>
+</div>
+<div style="display:flex; justify-content:center">
+    <div style="position:absolute; z-index:1; bottom:80px">
+        <div style="display:flex; justify-content:center; margin-bottom:5px">拖拽：旋转&ensp;-&ensp;单击：标记</div>
+        <div style="display:flex; justify-content:center; margin-bottom:15px">-&ensp;双击：揭晓&ensp;-&ensp;<a href="https://gniquyij.github.io/minestack/" style="display:inline-flex; align-items:center">English</a></div>
+        <div lang="zh" style="display:flex; justify-content:center">
+            <a href="https://github.com/gniquyij/minestack" target="_blank" rel="noopener">星栈</a>&ensp;<span style="display:inline-flex; align-items:center">© 2021&ensp;<a href="https://github.com/gniquyij" target="_blank" rel="noopener">Yuqing Ji</a></span>
+        </div>
+    </div>
+</div>
+<script src="./../src/three.js"></script>
+<script src="./../src/dat.gui.js"></script>
+<script src="./../src/OrbitControls.js"></script>
+<script src="./../src/index.js"></script>
+</body>
+</html>
