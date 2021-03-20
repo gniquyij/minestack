@@ -6,21 +6,26 @@ var cubeGroup
 var cubeGroupObj
 var cubeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5)
 var cubeMaterial = new THREE.MeshStandardMaterial()
-var mineTexture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/mine.jpg')
+if (document.documentElement.lang == 'en') {
+    CDN = 'https://raw.githubusercontent.com/gniquyij'
+} else if (document.documentElement.lang == 'zh') {
+    CDN = 'https://6d69-minestack-9g0oaah6510bf145-1305308580.tcb.qcloud.la'
+}
+var mineTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/mine.jpg`)
 var mineMaterial = new THREE.MeshStandardMaterial({map: mineTexture})
 var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: '#00c91e', opacity: 1, transparent: true})
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rollOverMaterial = new THREE.MeshStandardMaterial({color: '#ff0000', opacity: 0.5, transparent: true})
-var flagTexture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/flag.jpg')
+var flagTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/flag.jpg`)
 var flagMaterial = new THREE.MeshStandardMaterial({map: flagTexture})
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
 var timer, timerStopped, hour, minute, second, record
 var gameRound = 0
 var cubeSound, bgSound
-var cubeSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/test-cube.mp3' //cr: pikachu
+var cubeSoundPath = `${CDN}/minestack/gh-pages/src/test-cube.mp3` //cr: pikachu
 var bgSoundIsOn = false
-var bgSoundPath = 'https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/src/bg.mp3' //bootleg: chant iii
+var bgSoundPath = `${CDN}/minestack/gh-pages/src/bg.mp3` //bootleg: chant iii
 var touchTime = new Date().getTime()
 var tipColors = [
     '#1401f5',
