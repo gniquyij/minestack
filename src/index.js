@@ -25,7 +25,6 @@ var timer, timerStopped, hour, minute, second, record
 var gameRound = 0
 var cubeSound, bgSound
 var cubeSoundPath = `${CDN}/minestack/gh-pages/src/test-cube.mp3` //cr: pikachu
-var bgSoundIsOn = false
 var bgSoundPath = `${CDN}/minestack/gh-pages/src/bg.mp3` //bootleg: chant iii
 var touchTime = new Date().getTime()
 var tipColors = [
@@ -62,6 +61,7 @@ var params = {
 }
 blocker = document.getElementById('blocker')
 playButton = document.getElementById("playButton")
+replayButton = document.getElementById("replayButton")
 
 init()
 main()
@@ -79,6 +79,12 @@ function init() {
     document.addEventListener('mousemove', onMouseMove, false)
     document.addEventListener('pointerdown', onMouseClick, false)
     window.addEventListener('resize', onWindowResize, false)
+    replayButton.addEventListener('pointerdown', function (event) {
+        while (scene.children.length > 0) {
+            scene.remove(scene.children[0])
+        }
+        main()
+    })
     controls = new THREE.OrbitControls(camera, renderer.domElement)
     controls.addEventListener('change', render)
     raycaster = new THREE.Raycaster()
@@ -87,8 +93,10 @@ function init() {
     record = document.getElementById('record')
     bgSound = loadAudio(bgSoundPath)
     cubeSound = loadAudio(cubeSoundPath)
-    playButton.addEventListener('pointerdown', function(event){
+    playButton.addEventListener('pointerdown', function (event) {
+        bgSoundIsOn = document.getElementById('sound').checked
         document.body.removeChild(blocker)
+        playAudio(bgSound, bgSoundIsOn, true)
     })
 }
 
@@ -113,7 +121,6 @@ function main() {
     scene.add(rollOverMesh)
     cubeGroup.add(rollOverMesh)
     autoRotate()
-    playAudio(bgSound, bgSoundIsOn, true)
 }
 
 function addCubes(cubeCountPerEdge) {
