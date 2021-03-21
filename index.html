@@ -1,13 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>minestack</title>
     <link rel="icon" href="src/favicon.ico?">
-    <style>
-        canvas {position:absolute; top:0; left:0}
-        #gui {position:absolute; left:50%; transform:translate(-50%, 0)}
-        #guiParent {position:absolute; z-index:2}
-    </style>
+    <link rel="stylesheet" href="src/index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-K806KFKNRQ"></script>
@@ -19,24 +15,32 @@
     </script>
 </head>
 <body>
-    <div style="display:flex; justify-content:center">
-        <div style="position:absolute; z-index:1">
-            <div id="stopwatch" style="font-size:50px; margin-top:75px; display:flex; justify-content:center">00:00:00</div>
-            <div style="display:flex; justify-content:center"><span>Record:</span>&ensp;<span id="record">00:00:00</span></div>
-        </div>
+<div id="blocker">
+    <div id="instructions">
+        <span style="font-size:36px"><b>M I N E S T A C K</b></span><br>
+        <br>
+        Orbit: Rotate<br>
+        Click: Flag<br>
+        Double click: Reveal<br>
+        <a id="language" href="zh/index.html">简体中文</a><br>
+        <br>
+        <button id="playButton"><b>P L A Y</b></button>
     </div>
-    <div style="display:flex; justify-content:center">
-        <div style="position:absolute; z-index:1; bottom:25px">
-            <div style="display:flex; justify-content:center; margin-bottom:5px">orbit: rotate,&ensp;click: flag,</div>
-            <div style="display:flex; justify-content:center; margin-bottom:80px">double click: reveal,&ensp;<a href="https://gniquyij.github.io/minestack/zh/" style="display:inline-flex; align-items:center; font-size:13.5px">简体中文</a></div>
-            <div style="display:flex; justify-content:center">
-                <a href="https://github.com/gniquyij/minestack" target="_blank" rel="noopener">MINESTACK</a>&ensp;© 2021&ensp;<a href="https://github.com/gniquyij" target="_blank" rel="noopener">YUQING JI</a>
-            </div>
-        </div>
+</div>
+<div style="display:flex; justify-content:center">
+    <div style="position:absolute; z-index:1">
+        <div id="stopwatch">00:00:00</div>
+        <div style="display:flex; justify-content:center"><span>Record:</span>&ensp;<span id="record">00:00:00</span></div>
     </div>
-    <script src="src/three.js"></script>
-    <script src="src/dat.gui.js"></script>
-    <script src="src/OrbitControls.js"></script>
-    <script src="src/index.js"></script>
+</div>
+<div style="display:flex; justify-content:center">
+    <div id="footer">
+        <a href="https://github.com/gniquyij/minestack" target="_blank" rel="noopener">MINESTACK</a>&ensp;© 2021&ensp;<a href="https://github.com/gniquyij" target="_blank" rel="noopener">YUQING JI</a>
+    </div>
+</div>
+<script src="src/three.js"></script>
+<script src="src/dat.gui.js"></script>
+<script src="src/OrbitControls.js"></script>
+<script src="src/index.js"></script>
 </body>
 </html>

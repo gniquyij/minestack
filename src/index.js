@@ -60,10 +60,12 @@ var params = {
     },
     'rotate': false
 }
+blocker = document.getElementById('blocker')
+playButton = document.getElementById("playButton")
 
 init()
 main()
-addGui()
+//addGui()
 
 function init() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100)
@@ -85,6 +87,9 @@ function init() {
     record = document.getElementById('record')
     bgSound = loadAudio(bgSoundPath)
     cubeSound = loadAudio(cubeSoundPath)
+    playButton.addEventListener('pointerdown', function(event){
+        document.body.removeChild(blocker)
+    })
 }
 
 function main() {
