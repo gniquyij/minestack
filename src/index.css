@@ -10,14 +10,14 @@ canvas {
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.9);
-    position:absolute;
-    z-index:999
+    position: absolute;
+    z-index: 999
 }
 
 #footer {
-    position:absolute;
-    z-index:1;
-    bottom:100px
+    position: absolute;
+    z-index: 1;
+    bottom: 100px
 }
 
 #gui {
@@ -42,9 +42,9 @@ canvas {
 }
 
 #language {
-    display:inline-flex;
-    align-items:center;
-    color:#ffffff
+    display: inline-flex;
+    align-items: center;
+    color: #ffffff
 }
 
 #playButton {
@@ -56,8 +56,8 @@ canvas {
 }
 
 #stopwatch {
-    font-size:50px;
-    margin-top:50px;
-    display:flex;
-    justify-content:center
+    font-size: 50px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center
 }
