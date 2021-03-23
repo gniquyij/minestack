@@ -25,9 +25,10 @@ html {
     width: 100%;
     bottom: 0;
     color: #ffffff;
-    background-color: #000000;
+    background-color: #808080;
     padding: 20px;
-    text-align: center
+    text-align: center;
+    font-size: 16px
 }
 
 #gui {
@@ -47,7 +48,7 @@ html {
     color: #ffffff;
     text-align: center;
     margin-top: 125px;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 40px;
 }
 
