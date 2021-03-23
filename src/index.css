@@ -21,7 +21,13 @@ html {
 #footer {
     position: absolute;
     z-index: 1;
-    bottom: 100px
+    bottom: 100px;
+    width: 100%;
+    bottom: 0;
+    color: #ffffff;
+    background-color: #000000;
+    padding: 20px;
+    text-align: center
 }
 
 #gui {
@@ -65,7 +71,7 @@ html {
     z-index: 1;
     color: #ffffff;
     background-color: #808080;
-    padding: 5px;
+    padding: 10px;
     width: 100%;
     text-align: center
 }
