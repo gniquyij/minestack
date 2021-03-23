@@ -6,11 +6,12 @@ var cubeGroup
 var cubeGroupObj
 var cubeGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5)
 var cubeMaterial = new THREE.MeshStandardMaterial()
-if (document.documentElement.lang == 'en') {
-    CDN = 'https://raw.githubusercontent.com/gniquyij'
-} else if (document.documentElement.lang == 'zh') {
-    CDN = 'https://6d69-minestack-9g0oaah6510bf145-1305308580.tcb.qcloud.la'
-}
+CDN = 'https://raw.githubusercontent.com/gniquyij'
+//if (document.documentElement.lang == 'en') {
+//    CDN = 'https://raw.githubusercontent.com/gniquyij'
+//} else if (document.documentElement.lang == 'zh') {
+//    CDN = 'https://6d69-minestack-9g0oaah6510bf145-1305308580.tcb.qcloud.la'
+//}
 var mineTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/mine.jpg`)
 var mineMaterial = new THREE.MeshStandardMaterial({map: mineTexture})
 var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: '#00c91e', opacity: 1, transparent: true})
