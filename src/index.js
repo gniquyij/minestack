@@ -64,9 +64,10 @@ var autoRotated = true
 blocker = document.getElementById('blocker')
 playButton = document.getElementById("playButton")
 playButton.addEventListener('pointerdown', function (event) {
+    rotationSpeed = 0.0005
     bgSoundIsOn = document.getElementById('sound').checked
     playAudio(bgSound, bgSoundIsOn, true)
-    autoRotated = false
+//    autoRotated = false
     cubeCountPerEdge = 3
     document.body.removeChild(blocker)
     init()
@@ -77,6 +78,11 @@ replayButton.addEventListener('pointerdown', function (event) {
     init()
     main()
 })
+var gridHelper = new THREE.GridHelper(25, 50)
+gridHelper.position.x = gridHelper.position.x - 0.25
+gridHelper.position.y = gridHelper.position.y - 1.5
+gridHelper.position.z = gridHelper.position.z - 0.25
+var rotationSpeed = 0.005
 
 init()
 main()
@@ -122,6 +128,8 @@ function main() {
     rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial)
     scene.add(rollOverMesh)
     cubeGroup.add(rollOverMesh)
+    scene.add(gridHelper)
+    cubeGroup.add(gridHelper)
     autoRotate()
 }
 
@@ -207,7 +215,7 @@ function addTips(cubeList) {
 
 function autoRotate() {
     if (autoRotated) {
-        cubeGroup.rotation.y += 0.005
+        cubeGroup.rotation.y += rotationSpeed
         requestAnimationFrame(autoRotate)
     }
     render()
