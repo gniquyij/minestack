@@ -1,5 +1,5 @@
 var camera, scene, renderer, controls, mouse, raycaster, gui, light
-var cubeCountPerEdge = 3
+var cubeCountPerEdge = 5
 var rollOverMesh
 var cubeList, mineList, nonMineList
 var cubeGroup
@@ -59,9 +59,23 @@ var params = {
     },
     'rotate': false
 }
+var autoRotated = true
 blocker = document.getElementById('blocker')
 playButton = document.getElementById("playButton")
+playButton.addEventListener('pointerdown', function (event) {
+    bgSoundIsOn = document.getElementById('sound').checked
+    playAudio(bgSound, bgSoundIsOn, true)
+    autoRotated = false
+    cubeCountPerEdge = 3
+    document.body.removeChild(blocker)
+    init()
+    main()
+})
 replayButton = document.getElementById("replayButton")
+replayButton.addEventListener('pointerdown', function (event) {
+    init()
+    main()
+})
 
 init()
 main()
@@ -79,12 +93,6 @@ function init() {
     document.addEventListener('mousemove', onMouseMove, false)
     document.addEventListener('pointerdown', onMouseClick, false)
     window.addEventListener('resize', onWindowResize, false)
-    replayButton.addEventListener('pointerdown', function (event) {
-        while (scene.children.length > 0) {
-            scene.remove(scene.children[0])
-        }
-        main()
-    })
     controls = new THREE.OrbitControls(camera, renderer.domElement)
     controls.addEventListener('change', render)
     raycaster = new THREE.Raycaster()
@@ -93,11 +101,6 @@ function init() {
     record = document.getElementById('record')
     bgSound = loadAudio(bgSoundPath)
     cubeSound = loadAudio(cubeSoundPath)
-    playButton.addEventListener('pointerdown', function (event) {
-        bgSoundIsOn = document.getElementById('sound').checked
-        document.body.removeChild(blocker)
-        playAudio(bgSound, bgSoundIsOn, true)
-    })
 }
 
 function main() {
@@ -204,7 +207,7 @@ function addTips(cubeList) {
 }
 
 function autoRotate() {
-    if (params.rotate) {
+    if (autoRotated) {
         cubeGroup.rotation.y += 0.005
         requestAnimationFrame(autoRotate)
     }
