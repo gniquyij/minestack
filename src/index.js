@@ -23,9 +23,10 @@ var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
 var timer, timerStopped, hour, minute, second, record
 var gameRound = 0
-var cubeSound, bgSound
 var cubeSoundPath = `${CDN}/minestack/gh-pages/src/test-cube.mp3` //cr: pikachu
 var bgSoundPath = `${CDN}/minestack/gh-pages/src/bg.mp3` //bootleg: chant iii
+var bgSound = loadAudio(bgSoundPath)
+var cubeSound = loadAudio(cubeSoundPath)
 var touchTime = new Date().getTime()
 var tipColors = [
     '#1401f5',
@@ -99,8 +100,6 @@ function init() {
     mouse = new THREE.Vector2()
     timer = document.getElementById('stopwatch')
     record = document.getElementById('record')
-    bgSound = loadAudio(bgSoundPath)
-    cubeSound = loadAudio(cubeSoundPath)
 }
 
 function main() {
