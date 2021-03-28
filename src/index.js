@@ -62,11 +62,16 @@ replayButton.addEventListener('pointerdown', function (event) {
     init()
     main()
 })
+replayButton.style.backgroundColor = colors['replayButton']['background']
+replayButton.style.color = colors['replayButton']['text']
 var gridHelper = new THREE.GridHelper(25, 50, colors['gridHelper']['centerLine'][colorMode], colors['gridHelper']['grid'][colorMode])
 gridHelper.position.x = gridHelper.position.x - 0.25
 gridHelper.position.y = gridHelper.position.y - 1.5
 gridHelper.position.z = gridHelper.position.z - 0.25
 var rotationSpeed = 0.005
+footer = document.getElementById('footer')
+footer.style.backgroundColor = colors['footer']['background']
+footer.style.color = colors['footer']['text']
 
 init()
 main()

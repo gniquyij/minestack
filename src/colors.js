@@ -1,4 +1,8 @@
 var colors = {
+    'footer': {
+        'text': '#ffffff',
+        'background': '#000000'
+    },
     'gridHelper': {
         'centerLine': {
             '1989': '#444444',
@@ -22,6 +26,10 @@ var colors = {
     'mineRevealedMaterial': {
         '1989': '#00c91e',
         '2021': ''
+    },
+    'replayButton': {
+        'text': '#ffffff',
+        'background': '#808080'
     },
     'rollOverMaterial': {
         '1989': '#ff0000',
