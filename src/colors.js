@@ -45,7 +45,7 @@ var colors = {
     },
     'rollOverMaterial': {
         '1989': '#ff0000',
-        '2021': '#ff0000'
+        '2021': '#ff124f'
     },
     'rendererCanvas': {
         '1989': '#f0f0f0',
