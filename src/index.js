@@ -263,12 +263,12 @@ function playAudio(sound, soundIsOn=true, onLoop=false) {
 }
 
 function onMouseClick(event) {
-    var delay = 250
+    var delay = 500
     var delta = new Date().getTime() - touchTime
-    onMouseSingleClick(event)
     if (delta < delay) {
         onMouseDoubleClick(event)
     }
+    onMouseSingleClick(event)
     touchTime = new Date().getTime()
 }
 
