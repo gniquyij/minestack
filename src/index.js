@@ -14,9 +14,9 @@ CDN = 'https://raw.githubusercontent.com/gniquyij'
 //}
 var mineTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/mine.jpg`)
 var mineMaterial = new THREE.MeshStandardMaterial({map: mineTexture})
-var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: '#00c91e', opacity: 1, transparent: true})
+var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: colors['mineRevealedMaterial']["1989"], opacity: 1, transparent: true})
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
-var rollOverMaterial = new THREE.MeshStandardMaterial({color: '#ff0000', opacity: 0.5, transparent: true})
+var rollOverMaterial = new THREE.MeshStandardMaterial({color: colors['rollOverMaterial']['1989'], opacity: 0.5, transparent: true})
 var flagTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/flag.jpg`)
 var flagMaterial = new THREE.MeshStandardMaterial({map: flagTexture})
 var rendererCanvas = document.createElement('canvas')
@@ -28,24 +28,7 @@ var bgSoundPath = `${CDN}/minestack/gh-pages/src/bg.mp3` //bootleg: chant iii
 var bgSound = loadAudio(bgSoundPath)
 var cubeSound = loadAudio(cubeSoundPath)
 var touchTime = new Date().getTime()
-var tipColors = [
-    '#1401f5',
-    '#377e22',
-    '#e83323',
-    '#05017b',
-    '#77150f',
-    '#377e7e',
-    '#000000',
-    '#808080',
-    '#1401f5',
-    '#377e22',
-    '#e83323',
-    '#05017b',
-    '#77150f',
-    '#377e7e',
-    '#000000',
-    '#808080'
-]
+var tipColors = colors['tips']
 var params = {
     'bgSound': false,
     'cubesPerEdge': 3,
@@ -78,7 +61,7 @@ replayButton.addEventListener('pointerdown', function (event) {
     init()
     main()
 })
-var gridHelper = new THREE.GridHelper(25, 50)
+var gridHelper = new THREE.GridHelper(25, 50, colors['gridHelper']['centerLine']['1989'], colors['gridHelper']['grid']['1989'])
 gridHelper.position.x = gridHelper.position.x - 0.25
 gridHelper.position.y = gridHelper.position.y - 1.5
 gridHelper.position.z = gridHelper.position.z - 0.25
@@ -92,7 +75,7 @@ function init() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100)
     camera.position.z = 10
     scene = new THREE.Scene()
-    scene.background = new THREE.Color('#f0f0f0')
+    scene.background = new THREE.Color(colors['sceneBackground']['1989'])
     renderer = new THREE.WebGLRenderer({antialias: true, canvas: rendererCanvas})
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -109,7 +92,7 @@ function init() {
 }
 
 function main() {
-    light = new THREE.HemisphereLight('#ababab', '#030303')
+    light = new THREE.HemisphereLight(colors['light']['sky']['1989'], colors['light']['ground']['1989'])
     light.position.set(-2, 3, 20)
     scene.add(light)
     gameOver = false
