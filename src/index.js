@@ -1,4 +1,5 @@
 var camera, scene, renderer, controls, mouse, raycaster, gui, light
+var colorMode = '1989'
 var cubeCountPerEdge = 5
 var rollOverMesh
 var cubeList, mineList, nonMineList
@@ -14,9 +15,9 @@ CDN = 'https://raw.githubusercontent.com/gniquyij'
 //}
 var mineTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/mine.jpg`)
 var mineMaterial = new THREE.MeshStandardMaterial({map: mineTexture})
-var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: colors['mineRevealedMaterial']["1989"], opacity: 1, transparent: true})
+var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: colors['mineRevealedMaterial'][colorMode], opacity: 1, transparent: true})
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
-var rollOverMaterial = new THREE.MeshStandardMaterial({color: colors['rollOverMaterial']['1989'], opacity: 0.5, transparent: true})
+var rollOverMaterial = new THREE.MeshStandardMaterial({color: colors['rollOverMaterial'][colorMode], opacity: 0.5, transparent: true})
 var flagTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/flag.jpg`)
 var flagMaterial = new THREE.MeshStandardMaterial({map: flagTexture})
 var rendererCanvas = document.createElement('canvas')
@@ -61,7 +62,7 @@ replayButton.addEventListener('pointerdown', function (event) {
     init()
     main()
 })
-var gridHelper = new THREE.GridHelper(25, 50, colors['gridHelper']['centerLine']['1989'], colors['gridHelper']['grid']['1989'])
+var gridHelper = new THREE.GridHelper(25, 50, colors['gridHelper']['centerLine'][colorMode], colors['gridHelper']['grid'][colorMode])
 gridHelper.position.x = gridHelper.position.x - 0.25
 gridHelper.position.y = gridHelper.position.y - 1.5
 gridHelper.position.z = gridHelper.position.z - 0.25
@@ -75,7 +76,7 @@ function init() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100)
     camera.position.z = 10
     scene = new THREE.Scene()
-    scene.background = new THREE.Color(colors['sceneBackground']['1989'])
+    scene.background = new THREE.Color(colors['sceneBackground'][colorMode])
     renderer = new THREE.WebGLRenderer({antialias: true, canvas: rendererCanvas})
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -92,7 +93,7 @@ function init() {
 }
 
 function main() {
-    light = new THREE.HemisphereLight(colors['light']['sky']['1989'], colors['light']['ground']['1989'])
+    light = new THREE.HemisphereLight(colors['light']['sky'][colorMode], colors['light']['ground'][colorMode])
     light.position.set(-2, 3, 20)
     scene.add(light)
     gameOver = false
