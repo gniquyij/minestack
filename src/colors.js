@@ -1,4 +1,10 @@
 var colors = {
+    'dashboard': {
+        'text': {
+            '1989': '#000000',
+            '2021': '#05d9e8'
+        }
+    },
     'footer': {
         'text': '#ffffff',
         'background': '#000000'
@@ -6,34 +12,40 @@ var colors = {
     'gridHelper': {
         'centerLine': {
             '1989': '#444444',
-            '2021': '',
+            '2021': '#ff124f',
         },
         'grid': {
             '1989': '#888888',
-            '2021': '',
+            '2021': '#05d9e8',
         }
     },
     'light': {
         'sky': {
             '1989': '#ababab',
-            '2021': ''
+            '2021': '#d1f7ff'
         },
         'ground': {
             '1989': '#030303',
-            '2021': ''
+            '2021': '#01012b'
         }
     },
     'mineRevealedMaterial': {
-        '1989': '#00c91e',
-        '2021': ''
+        '1989': '#ff0000',
+        '2021': '#ff0000'
     },
     'replayButton': {
-        'text': '#ffffff',
-        'background': '#808080'
+        'text': {
+            '1989': '#ffffff',
+            '2021': '#ffffff'
+        },
+        'background': {
+            '1989': '#808080',
+            '2021': '#000000'
+        }
     },
     'rollOverMaterial': {
         '1989': '#ff0000',
-        '2021': ''
+        '2021': '#ff0000'
     },
     'sceneBackground': {
         '1989': '#f0f0f0',

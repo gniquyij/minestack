@@ -1,5 +1,5 @@
 var camera, scene, renderer, controls, mouse, raycaster, gui, light
-var colorMode = '1989'
+var colorMode = '2021'
 var cubeCountPerEdge = 5
 var rollOverMesh
 var cubeList, mineList, nonMineList
@@ -51,7 +51,7 @@ playButton.addEventListener('pointerdown', function (event) {
     rotationSpeed = 0.0005
     bgSoundIsOn = document.getElementById('sound').checked
     playAudio(bgSound, bgSoundIsOn, true)
-//    autoRotated = false
+    autoRotated = false
     cubeCountPerEdge = 3
     document.body.removeChild(blocker)
     init()
@@ -62,8 +62,8 @@ replayButton.addEventListener('pointerdown', function (event) {
     init()
     main()
 })
-replayButton.style.backgroundColor = colors['replayButton']['background']
-replayButton.style.color = colors['replayButton']['text']
+replayButton.style.backgroundColor = colors['replayButton']['background'][colorMode]
+replayButton.style.color = colors['replayButton']['text'][colorMode]
 var gridHelper = new THREE.GridHelper(25, 50, colors['gridHelper']['centerLine'][colorMode], colors['gridHelper']['grid'][colorMode])
 gridHelper.position.x = gridHelper.position.x - 0.25
 gridHelper.position.y = gridHelper.position.y - 1.5
@@ -72,6 +72,8 @@ var rotationSpeed = 0.005
 footer = document.getElementById('footer')
 footer.style.backgroundColor = colors['footer']['background']
 footer.style.color = colors['footer']['text']
+dashboard = document.getElementById('dashboard')
+dashboard.style.color = colors['dashboard']['text'][colorMode]
 
 init()
 main()
@@ -81,8 +83,9 @@ function init() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100)
     camera.position.z = 10
     scene = new THREE.Scene()
-    scene.background = new THREE.Color(colors['sceneBackground'][colorMode])
-    renderer = new THREE.WebGLRenderer({antialias: true, canvas: rendererCanvas})
+//    scene.background = new THREE.Color('#f877ff')
+    renderer = new THREE.WebGLRenderer({alpha:true, antialias: true, canvas: rendererCanvas})
+    renderer.setClearColor('#ffffff', 0)
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
     document.body.appendChild(renderer.domElement)
