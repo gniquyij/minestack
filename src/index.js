@@ -22,6 +22,7 @@ var flagTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/
 var flagMaterial = new THREE.MeshStandardMaterial({map: flagTexture})
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
+rendererCanvas.style.background = colors['rendererCanvas'][colorMode]
 var timer, timerStopped, hour, minute, second, record
 var gameRound = 0
 var cubeSoundPath = `${CDN}/minestack/gh-pages/src/test-cube.mp3` //cr: pikachu
@@ -83,7 +84,6 @@ function init() {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 1, 100)
     camera.position.z = 10
     scene = new THREE.Scene()
-//    scene.background = new THREE.Color('#f877ff')
     renderer = new THREE.WebGLRenderer({alpha:true, antialias: true, canvas: rendererCanvas})
     renderer.setClearColor('#ffffff', 0)
     renderer.setPixelRatio(window.devicePixelRatio)
