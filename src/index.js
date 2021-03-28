@@ -382,7 +382,7 @@ function onMouseSingleClick(event) {
     if (intersects.length > 0 && !gameOver) {
         var intersect = intersects[0]
         for (var i in cubeList) {
-            if (cubeList[i].position.equals(intersect.point.round())) {
+            if (cubeList[i].position.equals(intersect.point.round()) && !cubeList[i].isRevealed) {
                 cubeList[i].material = flagMaterial
             }
         }
