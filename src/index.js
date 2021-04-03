@@ -13,12 +13,14 @@ CDN = 'https://raw.githubusercontent.com/gniquyij'
 //} else if (document.documentElement.lang == 'zh') {
 //    CDN = 'https://6d69-minestack-9g0oaah6510bf145-1305308580.tcb.qcloud.la'
 //}
-var mineTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/mine.jpg`)
+//var mineTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/mine.jpg`)
+var mineTexture = drawMine()
 var mineMaterial = new THREE.MeshStandardMaterial({map: mineTexture})
 var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: colors['mineRevealedMaterial'][colorMode], opacity: 1, transparent: true})
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
 var rollOverMaterial = new THREE.MeshStandardMaterial({color: colors['rollOverMaterial'][colorMode], opacity: 0.65, transparent: true})
-var flagTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/flag.jpg`)
+//var flagTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/flag.jpg`)
+var flagTexture = drawFlag()
 var flagMaterial = new THREE.MeshStandardMaterial({map: flagTexture})
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
@@ -211,6 +213,75 @@ function autoRotate() {
         requestAnimationFrame(autoRotate)
     }
     render()
+}
+
+function drawFlag() {
+    var canvas = document.createElement('canvas')
+    canvas.width = 500
+    canvas.height = 500
+    var context = canvas.getContext('2d')
+
+    context.fillStyle = '#ffffff'
+    context.fillRect(0, 0, canvas.width, canvas.height)
+
+    context.fillStyle = '#ff0000'
+    var r2 = new Path2D()
+    r2.rect(canvas.width / 5, canvas.height / 15, canvas.width / 5, canvas.height / 5, canvas.height / 5)
+    context.fill(r2)
+    var r3 = new Path2D()
+    r3.rect(canvas.width / 5, canvas.height / 15 + canvas.height / 5, canvas.width * 2 / 5, canvas.height / 5)
+    context.fill(r3)
+    var r4 = new Path2D()
+    r4.rect(canvas.width / 5, canvas.height / 15 + canvas.height * 2 / 5, canvas.width * 3 / 5, canvas.height / 5)
+    context.fill(r4)
+
+    context.fillStyle = '#000000'
+    var r1 = new Path2D()
+    r1.rect(canvas.width / 5, canvas.height / 15, canvas.width / 15, canvas.height * 13 / 15)
+    context.fill(r1)
+
+    return new THREE.CanvasTexture(canvas)
+}
+
+function drawMine() {
+    var canvas = document.createElement('canvas')
+    canvas.width = 500
+    canvas.height = 500
+    var context = canvas.getContext('2d')
+    context.fillStyle = '#ffffff'
+    context.fillRect(0, 0, canvas.width, canvas.height)
+    context.fillStyle = '#000000'
+
+    var r1 = new Path2D()
+    r1.rect(canvas.width / 5, canvas.height / 5, canvas.width * 3 / 5, canvas.height * 3 / 5)
+    context.fill(r1)
+
+    var r2 = new Path2D()
+    r2.rect(canvas.width / 15, canvas.height * 7 / 15, canvas.width * 13 / 15, canvas.height / 15)
+    context.fill(r2)
+    var r3 = new Path2D()
+    r3.rect(canvas.height * 7 / 15, canvas.width / 15, canvas.height / 15, canvas.width * 13 / 15)
+    context.fill(r3)
+
+    context.fillStyle = '#ffffff'
+    var r4 = new Path2D()
+    r4.rect(canvas.width / 5, canvas.height / 5, canvas.width / 15, canvas.height / 15)
+    context.fill(r4)
+    var r5 = new Path2D()
+    r5.rect(canvas.width * 4 / 5 - canvas.width / 15, canvas.height / 5, canvas.width / 15, canvas.height / 15)
+    context.fill(r5)
+    var r6 = new Path2D()
+    r6.rect(canvas.width / 5, canvas.height * 4 / 5 - canvas.height / 15, canvas.width / 15, canvas.height / 15)
+    context.fill(r6)
+    var r7 = new Path2D()
+    r7.rect(canvas.width * 4 / 5 - canvas.width / 15, canvas.height * 4 / 5 - canvas.height / 15, canvas.width / 15, canvas.height / 15)
+    context.fill(r7)
+
+    var r8 = new Path2D()
+    r8.rect(canvas.width / 5 + canvas.width * 2 / 15, canvas.height / 5 + canvas.height * 2 / 15, canvas.width * 2 / 15, canvas.height * 2 / 15)
+    context.fill(r8)
+
+    return new THREE.CanvasTexture(canvas)
 }
 
 function getCubeAround(cube, cubeList) {
