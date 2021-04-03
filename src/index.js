@@ -1,5 +1,6 @@
 var camera, scene, renderer, controls, mouse, raycaster, gui, light
-var colorMode = '2021'
+var skinMode = '2021'
+var light = new THREE.HemisphereLight(colors['light']['sky'][skinMode], colors['light']['ground'][skinMode])
 var cubeCountPerEdge = 5
 var rollOverMesh
 var cubeList, mineList, nonMineList
@@ -16,15 +17,16 @@ CDN = 'https://raw.githubusercontent.com/gniquyij'
 //var mineTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/mine.jpg`)
 var mineTexture = drawMine()
 var mineMaterial = new THREE.MeshStandardMaterial({map: mineTexture})
-var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: colors['mineRevealedMaterial'][colorMode], opacity: 1, transparent: true})
+var mineRevealedMaterial = new THREE.MeshStandardMaterial({color: colors['mineRevealedMaterial'][skinMode], opacity: 1, transparent: true})
 var rollOverGeo = new THREE.BoxBufferGeometry(0.5, 0.5, 0.5)
-var rollOverMaterial = new THREE.MeshStandardMaterial({color: colors['rollOverMaterial'][colorMode], opacity: 0.65, transparent: true})
+var rollOverMaterial = new THREE.MeshStandardMaterial({color: colors['rollOverMaterial'][skinMode], opacity: 0.5, transparent: true})
 //var flagTexture = new THREE.TextureLoader().load(`${CDN}/minestack/gh-pages/src/flag.jpg`)
 var flagTexture = drawFlag()
 var flagMaterial = new THREE.MeshStandardMaterial({map: flagTexture})
 var rendererCanvas = document.createElement('canvas')
 rendererCanvas.id = 'rendererCanvas'
-rendererCanvas.style.background = colors['rendererCanvas'][colorMode]
+rendererCanvas.style.background = colors['rendererCanvas'][skinMode]
+var gridHelper = new THREE.GridHelper(25, 50, colors['gridHelper']['centerLine'][skinMode], colors['gridHelper']['grid'][skinMode])
 var timer, timerStopped, hour, minute, second, record
 var gameRound = 0
 var cubeSoundPath = `${CDN}/minestack/gh-pages/src/test-cube.mp3` //cr: pikachu
@@ -47,6 +49,22 @@ var params = {
     },
     'rotate': false
 }
+replayButton = document.getElementById("replayButton")
+replayButton.addEventListener('pointerdown', function (event) {
+    init()
+    main()
+})
+replayButton.style.backgroundColor = colors['replayButton']['background'][skinMode]
+replayButton.style.color = colors['replayButton']['text'][skinMode]
+gridHelper.position.x = gridHelper.position.x - 0.25
+gridHelper.position.y = gridHelper.position.y - 1.75
+gridHelper.position.z = gridHelper.position.z - 0.25
+var rotationSpeed = 0.005
+footer = document.getElementById('footer')
+footer.style.backgroundColor = colors['footer']['background']
+footer.style.color = colors['footer']['text']
+dashboard = document.getElementById('dashboard')
+dashboard.style.color = colors['dashboard']['text'][skinMode]
 var autoRotated = true
 blocker = document.getElementById('blocker')
 playButton = document.getElementById("playButton")
@@ -56,27 +74,25 @@ playButton.addEventListener('pointerdown', function (event) {
     playAudio(bgSound, bgSoundIsOn, true)
     autoRotated = false
     cubeCountPerEdge = 3
+    classicSkin = document.getElementById('skinMode').checked
+    if (classicSkin) {
+        skinMode = '1989'
+    }
+    mineRevealedMaterial = new THREE.MeshStandardMaterial({color: colors['mineRevealedMaterial'][skinMode], opacity: 1, transparent: true})
+    rollOverMaterial = new THREE.MeshStandardMaterial({color: colors['rollOverMaterial'][skinMode], opacity: 0.5, transparent: true})
+    rendererCanvas.style.background = colors['rendererCanvas'][skinMode]
+    replayButton.style.backgroundColor = colors['replayButton']['background'][skinMode]
+    replayButton.style.color = colors['replayButton']['text'][skinMode]
+    gridHelper = new THREE.GridHelper(25, 50, colors['gridHelper']['centerLine'][skinMode], colors['gridHelper']['grid'][skinMode])
+    gridHelper.position.x = gridHelper.position.x - 0.25
+    gridHelper.position.y = gridHelper.position.y - 1.75
+    gridHelper.position.z = gridHelper.position.z - 0.25
+    dashboard.style.color = colors['dashboard']['text'][skinMode]
+    light = new THREE.HemisphereLight(colors['light']['sky'][skinMode], colors['light']['ground'][skinMode])
     document.body.removeChild(blocker)
     init()
     main()
 })
-replayButton = document.getElementById("replayButton")
-replayButton.addEventListener('pointerdown', function (event) {
-    init()
-    main()
-})
-replayButton.style.backgroundColor = colors['replayButton']['background'][colorMode]
-replayButton.style.color = colors['replayButton']['text'][colorMode]
-var gridHelper = new THREE.GridHelper(25, 50, colors['gridHelper']['centerLine'][colorMode], colors['gridHelper']['grid'][colorMode])
-gridHelper.position.x = gridHelper.position.x - 0.25
-gridHelper.position.y = gridHelper.position.y - 1.75
-gridHelper.position.z = gridHelper.position.z - 0.25
-var rotationSpeed = 0.005
-footer = document.getElementById('footer')
-footer.style.backgroundColor = colors['footer']['background']
-footer.style.color = colors['footer']['text']
-dashboard = document.getElementById('dashboard')
-dashboard.style.color = colors['dashboard']['text'][colorMode]
 
 init()
 main()
@@ -103,7 +119,6 @@ function init() {
 }
 
 function main() {
-    light = new THREE.HemisphereLight(colors['light']['sky'][colorMode], colors['light']['ground'][colorMode])
     light.position.set(-2, 3, 20)
     scene.add(light)
     gameOver = false
