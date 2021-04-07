@@ -157,6 +157,7 @@ function addCubes(cubeCountPerEdge) {
                     cubeMesh.position.set(Math.round(xList[x]), Math.round(yList[y]), Math.round(zList[z]))
                     cubeMesh.isMine = false
                     cubeMesh.isRevealed = false
+                    cubeMesh.isFlagged = false
                     cubeGroupObj.add(cubeMesh)
                 }
     cubeList = cubeGroupObj.children
@@ -469,7 +470,13 @@ function onMouseSingleClick(event) {
         var intersect = intersects[0]
         for (var i in cubeList) {
             if (cubeList[i].position.equals(intersect.point.round()) && !cubeList[i].isRevealed) {
-                cubeList[i].material = flagMaterial
+                if (cubeList[i].isFlagged) {
+                    cubeList[i].material = cubeMaterial
+                    cubeList[i].isFlagged = false
+                } else {
+                    cubeList[i].material = flagMaterial
+                    cubeList[i].isFlagged = true
+                }
             }
         }
     }
