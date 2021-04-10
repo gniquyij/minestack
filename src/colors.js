@@ -30,8 +30,8 @@ var colors = {
         }
     },
     'mineRevealedMaterial': {
-        '1989': '#ff0000',
-        '2021': '#ff0000'
+        '1989': '#00ff00',
+        '2021': '#00ff00'
     },
     'replayButton': {
         'text': {
