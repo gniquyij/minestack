@@ -1,3 +1,6 @@
+/*
+ * @author: Yuqing Ji, yuqing.ji@outlook.com
+ */
 var camera, scene, renderer, controls, mouse, raycaster, gui, light
 var skinMode = '2021'
 var light = new THREE.HemisphereLight(colors['light']['sky'][skinMode], colors['light']['ground'][skinMode])
