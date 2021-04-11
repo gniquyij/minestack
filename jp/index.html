@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <title>マインスタック - YUQING JI</title>
+    <link rel="icon" href="./../src/favicon.ico?">
+    <link rel="stylesheet" href="./../src/index.css">
+    <style>
+        canvas {position:absolute; top:0; left:0}
+        #gui {position:absolute; left:50%; transform:translate(-50%, 0)}
+        #guiParent {position:absolute; z-index:2}
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    <meta http-equiv='Content-Security-Policy' content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; connect-src 'self' 'unsafe-inline' https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' 'unsafe-inline' https://6d69-minestack-9g0oaah6510bf145-1305308580.tcb.qcloud.la; media-src 'self' 'unsafe-inline' https://6d69-minestack-9g0oaah6510bf145-1305308580.tcb.qcloud.la; frame-src 'self'">-->
+    <!--    Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K806KFKNRQ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-K806KFKNRQ');
+    </script>
+</head>
+<body>
+<div id="blocker">
+    <div id="instructions">
+        <span style="font-size:36px"><b>マインスタック</b></span><br>
+        <br>
+        ドラッグ：回転する<br>
+        クリック：旗を付ける、地雷の場所の目印として使う<br>
+        ダブルクリック：キューブを開ける<br>
+        数字は周りにある爆弾の個数を表しています<br>
+        <input type="checkbox" id="skinMode"> クラシックモード <input type="checkbox" id="sound"> 効果音<br>
+        <a class="language" href="./../index.html">English</a>・<a class="language" href="./../zh/index.html">简体中文</a><br>
+        <br>
+        <button id="playButton"><b>ス タ ー ト</b></button>
+    </div>
+</div>
+<div style="display:flex; justify-content:center">
+    <div id="replayButton" style="font-size:14px">初 め か ら</div>
+    <div id='dashboard' style="position:absolute; z-index:1">
+        <div id="stopwatch">00:00:00</div>
+        <div style="display:flex; justify-content:center; font-size:14px">最高記録：<span id="record" style="display:inline-flex; align-items:center">00:00:00</span></div>
+    </div>
+</div>
+<div style="display:flex; justify-content:center">
+    <div id="footer" lang="zh" style="font-size:14px">
+        <a href="https://github.com/gniquyij/minestack" target="_blank" rel="noopener" style="color:#ffffff">マインスタック</a>&emsp;© 2021&emsp;<a href="https://github.com/gniquyij" target="_blank" rel="noopener" style="color:#ffffff">YUQING JI</a>
+    </div>
+</div>
+<script src="./../src/three.js"></script>
+<script src="./../src/dat.gui.js"></script>
+<script src="./../src/OrbitControls.js"></script>
+<script src="./../src/colors.js"></script>
+<script src="./../src/index.js"></script>
+</body>
+</html>
