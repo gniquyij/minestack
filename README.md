@@ -6,7 +6,7 @@ I decided not to play Minesweeper cause during university my roommate created a 
 
 Rather than moving forward with Minesweeper, how about a new track?
 
-That's why I started MINESTACK, a 3D Minesweeper. Here's a video on how to play MINESTACK - almost the same as Minesweeper.
+That's why I started MINESTACK, a 3D Minesweeper. Here's a video on how to play MINESTACK - almost the same as Minesweeper:
 
 [![introduction to minestack](./cover.png)](https://www.youtube.com/watch?v=cfZS67XCwYc "Introduction to MINESTACK")
 
