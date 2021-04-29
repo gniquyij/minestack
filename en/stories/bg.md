@@ -10,11 +10,11 @@ That's why I started MINESTACK, a 3D Minesweeper. Here's a video on how to play 
 
 MINESTACK is a web game, currently a pure static piece. Any interests on the source code, here’s the reference:
 
-- https://github.com/gniquyij/minestack
+- [https://github.com/gniquyij/minestack](https://github.com/gniquyij/minestack)
 
 And…most importantly, give it a try! Enjoy!
 
-- https://gniquyij.github.io/minestack
+- [https://gniquyij.github.io/minestack](https://gniquyij.github.io/minestack)
 
 <div><a href="https://gniquyij.github.io/daily"><img src="https://github.com/gniquyij/gniquyij.github.io/blob/master/avatar.png?raw=true" style="float:right;width:85px;height:85px"/></a></div><div style="border-top:1px solid #e1e4e8;padding-top:16px"></div>
 <div>© 2018-2021 by YUQING JI</div>
