@@ -6,7 +6,7 @@ Rather than moving forward with Minesweeper, how about a new track?
 
 That's why I started MINESTACK, a 3D Minesweeper. Here's a video on how to play MINESTACK - almost the same as Minesweeper:
 
-<video controls="" preload="none" poster="https://raw.githubusercontent.com/gniquyij/minestack/gh-pages/cover.png"><source src="https://www.youtube.com/watch?v=cfZS67XCwYc" type="video/mp4"></video>
+[![introduction to minestack](./../../cover.png)](https://www.youtube.com/watch?v=cfZS67XCwYc "Introduction to MINESTACK")
 
 MINESTACK is a web game, currently a pure static piece. Any interests on the source code, here’s the reference:
 
