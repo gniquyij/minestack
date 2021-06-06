@@ -164,7 +164,7 @@ function autoReplay(cubes) {
     }, 10000)
     setTimeout(function(){
         replay()
-    }, 12000)
+    }, 11000)
 }
 
 function addCubes(cubeCountPerEdge) {
