@@ -147,7 +147,7 @@ function main() {
 
 function autoReplay(cubes) {
     var t = 1000
-    while (t < 10000) {
+    while (t < 5000) {
         setTimeout(function(){
             for (i in cubes) {
                 position_to_random(cubes[i])
@@ -161,10 +161,10 @@ function autoReplay(cubes) {
             position_to_zero(cubes[i])
             render()
         }
-    }, 10000)
+    }, 5000)
     setTimeout(function(){
         replay()
-    }, 11000)
+    },5100)
 }
 
 function addCubes(cubeCountPerEdge) {
@@ -217,6 +217,10 @@ function addMines(cubeList, minesTotal) {
     for (var i in mineList) {
         mineList[i].isMine = true
     }
+}
+
+function addRandom(min, max) {
+    return Math.random() * (max - min + 1) + min
 }
 
 function addRandomInt(min, max) {
@@ -517,7 +521,7 @@ function onWindowResize() {
 }
 
 function position_to_random(obj) {
-    obj.position.set(Math.random(), Math.random(), Math.random())
+    obj.position.set(addRandom(-1, 1), addRandom(-1, 1), addRandom(-1, 1))
     return obj
 }
 
