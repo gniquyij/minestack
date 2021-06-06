@@ -145,6 +145,28 @@ function main() {
     autoRotate()
 }
 
+function autoReplay(cubes) {
+    var t = 1000
+    while (t < 10000) {
+        setTimeout(function(){
+            for (i in cubes) {
+                position_to_random(cubes[i])
+                render()
+            }
+        }, t)
+        t += 100
+    }
+    setTimeout(function(){
+        for (i in cubes) {
+            position_to_zero(cubes[i])
+            render()
+        }
+    }, 10000)
+    setTimeout(function(){
+        replay()
+    }, 12000)
+}
+
 function addCubes(cubeCountPerEdge) {
     var xList = yList = zList = []
     if (cubeCountPerEdge > 5) {
@@ -408,6 +430,7 @@ function onMouseDoubleClick(event) {
                     gameOver = true
                     stopTimer()
                     scene.remove(rollOverMesh)
+                    autoReplay(cubeList)
                     return
                 }
                 cubeList[i].material = cubeList[i].tip
@@ -442,6 +465,7 @@ function onMouseDoubleClick(event) {
                     } else if (timerToSecond < recordToSecond) {
                         record.innerHTML = timer.innerHTML
                     }
+                    autoReplay(cubeList)
                 }
             }
         }
@@ -492,6 +516,16 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight)
 }
 
+function position_to_random(obj) {
+    obj.position.set(Math.random(), Math.random(), Math.random())
+    return obj
+}
+
+function position_to_zero(obj) {
+    obj.position.set(0, 0, 0)
+    return obj
+}
+
 function range(start, stop) {
     var rangeList = []
     for (var i = start; i <= stop; i ++) {
@@ -502,6 +536,11 @@ function range(start, stop) {
 
 function render() {
     renderer.render(scene, camera)
+}
+
+function replay() {
+    var e = new PointerEvent('pointerdown')
+    document.getElementById("replayButton").dispatchEvent(e)
 }
 
 function startTimer() {
